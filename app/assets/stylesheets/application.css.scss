@@ -1,0 +1,21 @@
+/*
+ *= require_self
+ *= require_tree .
+ */
+
+@import "bootstrap";
+
+p {
+  margin: 0;
+}
+
+.main.container {
+  margin: 20px auto;
+}
+
+.footer {
+  margin-top: 20px;
+  padding: 20px;
+  border-top: 1px solid #eee;
+  color: #ccc;
+}
