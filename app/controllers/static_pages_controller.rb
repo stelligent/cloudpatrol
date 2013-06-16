@@ -4,4 +4,8 @@ class StaticPagesController < ApplicationController
       render "settings/index"
     end
   end
+
+  def favicon
+    render nothing: true
+  end
 end

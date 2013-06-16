@@ -7,5 +7,7 @@ Cloudpatrol::Application.routes.draw do
 
   resources :settings, except: [ :show ]
 
+  get "favicon.ico" => "static_pages#favicon"
+
   root to: "static_pages#root"
 end
