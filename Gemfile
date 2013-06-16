@@ -3,7 +3,7 @@ ruby '2.0.0'
 
 gem 'rails', '4.0.0.rc2'
 
-# Use SCSS for stylesheets
+gem 'haml-rails'
 gem 'sass-rails', '~> 4.0.0.rc2'
 
 # Use Uglifier as compressor for JavaScript assets
