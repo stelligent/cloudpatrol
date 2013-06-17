@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
   before_filter :authorize
-  before_action :set_setting, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_setting, only: [ :edit, :update, :destroy ]
 
   def index
     @settings = Setting.all
@@ -43,6 +43,6 @@ private
   end
 
   def setting_params
-    params.require(:setting).permit(:key, :value)
+    params.require(:setting).permit(:key, :value, :protected)
   end
 end

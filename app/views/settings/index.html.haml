@@ -1,21 +1,12 @@
-%h1 Listing settings
-
-%table
-  %tr
-    %th Key
-    %th Value
-    %th
-    %th
-    %th
-
-  - if @settings.present?
+- if @settings.present?
+  %table
     - @settings.each do |setting|
       %tr
-        %td= setting.key
-        %td= setting.value
-        %td= link_to 'Edit', edit_setting_path(setting)
-        %td= link_to 'Destroy', setting, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New', new_setting_path
+        %td
+          .form-inline
+            = text_field_tag "setting_key[#{setting.id}]", setting.key, class: "input-medium", disabled: (setting.protected ? true : false)
+            = text_field_tag "setting_value[#{setting.id}]", setting.value, class: "input-medium", disabled: (setting.protected ? true : false)
+            = check_box_tag "setting_protected[#{setting.id}]", true, setting.protected?
+            = link_to 'delete', setting, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn"
+    %tr
+      %td= submit_tag "Submit", class: "btn btn-block btn-primary"
