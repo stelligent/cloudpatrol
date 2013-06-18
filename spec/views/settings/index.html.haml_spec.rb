@@ -5,19 +5,22 @@ describe "settings/index" do
     assign(:settings, [
       stub_model(Setting,
         key: "key_1",
-        value: "value"
+        value: "value",
+        protected: false
       ),
       stub_model(Setting,
         key: "key_2",
-        value: "value"
+        value: "value",
+        protected: true
       )
     ])
   end
 
   it "renders a list of settings" do
     render
-    assert_select "input", text: "key_1".to_s
-    assert_select "input", text: "key_2".to_s
-    assert_select "input", text: "value".to_s, count: 2
+    assert_select "input", value: "key_1"
+    assert_select "input", value: "key_2", disabled: true
+    assert_select "input", value: "value"
+    assert_select "input", value: "value", disabled: true
   end
 end
