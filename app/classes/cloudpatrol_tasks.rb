@@ -1,4 +1,4 @@
-class Cloudpatrol
+class CloudpatrolTasks
   def self.delete_iam_users_without_mfa
     iam = AWS.iam
     iam.users.each do |user|
