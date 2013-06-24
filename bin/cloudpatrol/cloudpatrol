@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __FILE__)
+require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
+#require 'cloudpatrol/commands'
+
+module StaticMessages
+  module Error
+    def no_such_command
+      puts "Error: no such command"
+    end
+  end
+
+  def heading
+    puts "CloudPatrol"
+    puts "(c) 2013"
+  end
+
+  def usage
+    puts "Run a command: cloudpatrol [command]"
+  end
+
+  def list
+    puts "List commands: cloudpatrol list"
+  end
+
+  def help
+    puts "Help: cloudpatrol help [command]"
+  end
+end
+
+unless ARGV.size == 0
+  if ARGV[0] == "help"                # display help
+    if ARGV[1]
+      if @commands.include?(ARGV[1])  # valid help
+        @commands[ARGV[1]].help
+      else
+        StaticMessages::Error.no_such_command
+        StaticMessages.list
+      end
+    else
+      StaticMessages.help
+    end
+
+  # Show available commands
+  elsif ARGV[0] == "list"
+    # pending
+
+  # Run command
+  elsif @commands.include?(ARGV[0])
+    # check for config
+    # pending
+
+  end
+else
+  StaticMessages.heading
+  StaticMessages.usage
+  StaticMessages.list
+  StaticMessages.help
+end
