@@ -1,14 +1,21 @@
 - if @settings.present?
-  %table
+  %table.table.table-condensed{style: "width: auto"}
+    %tr
+      %th Key
+      %th Value
+      / %th Last updated
+      %th Protection
+      %th
     - @settings.each do |setting|
       %tr
+        %td= text_field_tag "setting[key]", setting.key, class: "input-medium", disabled: (setting.key_protected? ? true : false)
+        %td= text_field_tag "setting[value]", setting.value, class: "input-medium", disabled: (setting.value_protected? ? true : false)
+        / %td= content_tag :span, (distance_of_time_in_words Time.now - setting.updated_at) + " ago"
         %td
-          .form-inline
-            = text_field_tag "setting_key[#{setting.id}]", setting.key, class: "input-medium", disabled: (setting.protected ? true : false)
-            = text_field_tag "setting_value[#{setting.id}]", setting.value, class: "input-medium", disabled: (setting.protected ? true : false)
-            = check_box_tag "setting_protected[#{setting.id}]", true, setting.protected?
-            = link_to 'delete', setting, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn"
-    %tr
-      %td= submit_tag "Submit", class: "btn btn-block btn-primary"
+          = select_tag "setting[protected]", options_for_select(["none", "key", "both"], setting.protected || "none"), style: "width: auto"
+          = hidden_field_tag "setting[id]", setting.id
+        %td
+          = link_to "<i class='icon-remove' style='top: 4px; position: relative;'></i>".html_safe, setting, method: :delete, data: { confirm: 'Are you sure?' }, id: "setting_delete", style: "#{setting.key_protected? ? "display: none;" : ""}"
+          = content_tag :i, nil, class: "icon-lock", style: "top: 4px; position: relative; #{setting.key_protected? ? '' : 'display: none;'}", id: "setting_lock"
 - else
   %h3 No settings.

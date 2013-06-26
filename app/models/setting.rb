@@ -1,20 +1,23 @@
 class Setting < ActiveRecord::Base
-  validates_presence_of :key, :value
+  validates_presence_of :key
   validates_uniqueness_of :key, case_sensitive: false
+  validates_inclusion_of :protected, in: ["none", "key", "both"]
   before_validation :beautify_key
 
-  def protect
-    self.protected = true
-    self.save
+  def key_protected?
+    if self.protected == "key" or self.protected == "both"
+      true
+    else
+      false
+    end
   end
 
-  def unprotect
-    self.protected = false
-    self.save
-  end
-
-  def protected?
-    self.protected
+  def value_protected?
+    if self.protected == "both"
+      true
+    else
+      false
+    end
   end
 
 private

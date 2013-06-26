@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
   def root
     # Render settings to logged user
     if current_user
-      render "settings/index"
+      redirect_to settings_path
     end
   end
 

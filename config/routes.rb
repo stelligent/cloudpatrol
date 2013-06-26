@@ -5,10 +5,10 @@ Cloudpatrol::Application.routes.draw do
     get "logout" => :destroy
   end
 
-  resources :settings, except: [ :show ]
+  resources :settings
 
   controller :static_pages do
-    get "favicon.ico" => :favicon
+    get "favicon.ico" => :favicon         # temporary fix, remove when favicon is made
     root to: :root
   end
 end

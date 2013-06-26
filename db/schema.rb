@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20130617183925) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "protected",  default: false
+    t.string   "protected",  default: ""
   end
 
   create_table "users", force: true do |t|

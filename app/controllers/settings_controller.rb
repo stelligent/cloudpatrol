@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
   before_filter :authorize
-  before_action :set_setting, only: [ :edit, :update, :destroy ]
+  before_action :set_setting, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @settings = Setting.all
@@ -8,6 +8,12 @@ class SettingsController < ApplicationController
 
   def new
     @setting = Setting.new
+  end
+
+  def show
+    respond_to do |format|
+      format.json { render json: @setting }
+    end
   end
 
   def edit
@@ -25,9 +31,14 @@ class SettingsController < ApplicationController
 
   def update
     if @setting.update(setting_params)
-      redirect_to @setting, notice: 'Setting was successfully updated.'
+      # redirect_to @setting, notice: 'Setting was successfully updated.'
     else
-      render action: 'edit'
+      # render action: 'edit'
+    end
+
+    respond_to do |format|
+      format.html { render nothing: true }
+      format.js
     end
   end
 

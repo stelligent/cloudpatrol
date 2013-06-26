@@ -10,6 +10,7 @@
       .navbar-inner
         .container
           = link_to "CloudPatrol", root_path, class: "brand"
+          = image_tag "ajax-loader.gif", class: "brand", id: "loader", style: "display: none;"
           %nav.nav-collapse.collapse
             %ul.nav.pull-right
               - unless current_user
