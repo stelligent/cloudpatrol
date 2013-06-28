@@ -1,3 +1,5 @@
+# TODO: Move to the gem
+
 class CloudpatrolTasks
   TODO = 5 # fetch from db (later)
 
