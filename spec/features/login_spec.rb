@@ -16,7 +16,13 @@ describe "Login" do
     it { should have_field "password" }
 
     describe "attempt with valid params" do
-      pending
+      before do
+        fill_in "name", with: "admin"
+        fill_in "password", with: "admin"
+        click_button "Log in"
+      end
+
+      it { should have_link "Log out", href: logout_path }
     end
 
     describe "attempt with invalid params" do

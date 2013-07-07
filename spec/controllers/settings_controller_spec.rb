@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SettingsController do
-  before { @admin = User.create(name: "admin", password: "admin", password_confirmation: "admin") }
+  before { @admin = User.find_by_name("admin") }
   let(:valid_attributes) { { "key" => "key_#{SecureRandom.hex}", "value" => "test_value", "protected" => "none" } }
   let(:valid_session) { { user_id: @admin.id } }
 
@@ -10,7 +10,7 @@ describe SettingsController do
       it "assigns all settings as @settings" do
         setting = Setting.create! valid_attributes
         get :index, {}, valid_session
-        assigns(:settings).should eq([setting])
+        assigns(:settings).should include(setting)
       end
     end
 
@@ -70,12 +70,12 @@ describe SettingsController do
         it "updates the requested setting" do
           setting = Setting.create! valid_attributes
           Setting.any_instance.should_receive(:update).with({ "key" => "MyString" })
-          put :update, {:id => setting.to_param, :setting => { "key" => "MyString" }}, valid_session
+          put :update, {id: setting.to_param, setting: { "key" => "MyString" }, format: :js}, valid_session
         end
 
         it "assigns the requested setting as @setting" do
           setting = Setting.create! valid_attributes
-          put :update, { id: setting.to_param, setting: valid_attributes }, valid_session
+          put :update, { id: setting.to_param, setting: valid_attributes, format: :js }, valid_session
           assigns(:setting).should eq(setting)
         end
 

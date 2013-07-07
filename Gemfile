@@ -3,7 +3,6 @@ ruby '2.0.0'
 
 gem 'rails', '4.0.0.rc2'
 
-gem 'aws-sdk', '~> 1.0'
 gem 'whenever', require: false
 
 gem 'haml-rails'
@@ -12,6 +11,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
+gem 'cloudpatrol', '~> 0.0.2', git: 'git@github.com:stelligent/cloudpatrol_gem.git'
 
 gem 'bcrypt-ruby'
 
