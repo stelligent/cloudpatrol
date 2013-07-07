@@ -8,7 +8,7 @@
       %th
     - @settings.each do |setting|
       %tr
-        %td= text_field_tag "setting[key]", setting.key, class: "input-medium", disabled: (setting.key_protected? ? true : false)
+        %td= text_field_tag "setting[key]", setting.key, class: "input-large", disabled: (setting.key_protected? ? true : false)
         %td= text_field_tag "setting[value]", setting.value, class: "input-medium", disabled: (setting.value_protected? ? true : false)
         / %td= content_tag :span, (distance_of_time_in_words Time.now - setting.updated_at) + " ago"
         %td

@@ -11,8 +11,10 @@ class SettingsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.json { render json: @setting }
+    if @setting
+      render json: @setting
+    else
+      render nothing: true
     end
   end
 
@@ -49,7 +51,12 @@ class SettingsController < ApplicationController
 private
 
   def set_setting
-    @setting = Setting.find(params[:id])
+    @setting =
+    begin
+      Setting.find(params[:id])
+    rescue
+      Setting.find_by_key(params[:id])
+    end
   end
 
   def setting_params

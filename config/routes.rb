@@ -1,4 +1,9 @@
 CloudpatrolRails::Application.routes.draw do
+  controller :tasks, path: "tasks" do
+    get "" => :index, as: "tasks"
+    get "perform" => :perform, as: "perform_task"
+  end
+
   controller :sessions do
     get "login" => :new
     post "login" => :create

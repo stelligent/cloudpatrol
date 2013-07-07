@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130617183925) do
+ActiveRecord::Schema.define(version: 20130707222319) do
 
   create_table "settings", force: true do |t|
     t.string   "key"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20130617183925) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "api_key"
   end
 
 end

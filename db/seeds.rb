@@ -1,7 +1,5 @@
 User.create(name: "admin", password: "admin", password_confirmation: "admin")
-Setting.create(key: "aws_access_key_id", value: "", protected: "key")
-Setting.create(key: "aws_secret_access_key", value: "", protected: "key")
-Setting.create(key: "opsworks_stack_age", value: "", protected: "key")
-Setting.create(key: "opsworks_layer_age", value: "", protected: "key")
-Setting.create(key: "opsworks_instance_age", value: "", protected: "key")
-Setting.create(key: "opsworks_app_age", value: "", protected: "key")
+
+%w{ aws_access_key_id aws_secret_access_key dynamodb_log_table ec2_instance_age opsworks_stack_age opsworks_layer_age opsworks_instance_age opsworks_app_age cloudformation_stack_age }.each do |setting|
+  Setting.create(key: setting, value: "", protected: "key")
+end
