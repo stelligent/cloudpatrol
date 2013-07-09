@@ -13,6 +13,24 @@ p {
   margin: 20px auto;
 }
 
+.commands-block {
+  a {
+    text-decoration: none;
+  }
+  table {
+    td {
+      span {
+        padding: 3px 4px;
+        border: 1px dotted black;
+        &.undefined {
+          color: gray;
+          border: 1px dotted gray;
+        }
+      }
+    }
+  }
+}
+
 .footer {
   margin-top: 20px;
   padding: 20px;

@@ -1,0 +1,26 @@
+%h3 Commands
+
+.commands-block
+  %table.table.table-condensed{style: "width: auto"}
+    %thead
+      %tr
+        %th{colspan: 2} EC2
+    %tbody
+      %tr
+        %td Start Instances
+        %td= link_to "perform", "#", class: "perform"
+      %tr
+        %td Stop Instances
+        %td= link_to "perform", "#", class: "perform"
+      %tr
+        %td
+          Terminate Instances older than
+          = aws_setting :ec2_instance_age
+          days
+        %td= link_to "perform", "#", class: "perform"
+      %tr
+        %td Clean Security Groups
+        %td= link_to "perform", "#", class: "perform"
+      %tr
+        %td Release Elastic IP not associated with an Instance
+        %td= link_to "perform", "#", class: "perform"

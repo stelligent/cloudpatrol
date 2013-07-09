@@ -11,7 +11,7 @@ describe SettingsController do
     end
 
     it "routes to #edit" do
-      get("/settings/1/edit").should route_to("settings#edit", :id => "1")
+      get("/settings/1/edit").should route_to("settings#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -19,11 +19,11 @@ describe SettingsController do
     end
 
     it "routes to #update" do
-      put("/settings/1").should route_to("settings#update", :id => "1")
+      put("/settings/1").should route_to("settings#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/settings/1").should route_to("settings#destroy", :id => "1")
+      delete("/settings/1").should route_to("settings#destroy", id: "1")
     end
   end
 end
