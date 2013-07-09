@@ -21,10 +21,9 @@ p {
     td {
       span {
         padding: 3px 4px;
-        border: 1px dotted black;
+        border: 1px dotted #aaa;
         &.undefined {
-          color: gray;
-          border: 1px dotted gray;
+          color: #777;
         }
       }
     }
