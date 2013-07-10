@@ -17,16 +17,13 @@ p {
   a {
     text-decoration: none;
   }
-  table {
-    td {
-      span {
-        padding: 3px 4px;
-        border: 1px dotted #aaa;
-        &.undefined {
-          color: #777;
-        }
-      }
-    }
+}
+
+span.aws-setting {
+  padding: 3px 4px;
+  border: 1px dotted #aaa;
+  &.undefined {
+    color: #777;
   }
 }
 

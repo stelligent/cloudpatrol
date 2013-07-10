@@ -8,22 +8,22 @@
     %tbody
       %tr
         %td Start Instances
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
       %tr
         %td Stop Instances
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
       %tr
         %td
           Terminate Instances older than
           = aws_setting :ec2_instance_age
           days
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
       %tr
         %td Clean Security Groups
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
       %tr
         %td Release Elastic IP not associated with an Instance
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
 
     %thead
       %tr
@@ -31,7 +31,7 @@
     %tbody
       %tr
         %td Delete Users that do not have MFA enabled
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
 
     %thead
       %tr
@@ -42,25 +42,25 @@
           Delete Stacks older than
           = aws_setting :opsworks_stack_age
           days
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
       %tr
         %td
           Delete Layers older than
           = aws_setting :opsworks_layer_age
           days
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
       %tr
         %td
           Delete Instances older than
           = aws_setting :opsworks_instance_age
           days
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
       %tr
         %td
           Delete Apps older than
           = aws_setting :opsworks_app_age
           days
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands
 
     %thead
       %tr
@@ -71,4 +71,4 @@
           Delete Stacks older than
           = aws_setting :cloudformation_stack_age
           days
-        %td= link_to "perform", "#", class: "perform"
+        %td= link_to "perform", "#", class: "perform" unless @disable_commands

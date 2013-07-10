@@ -1,9 +1,5 @@
 - title "Log in"
 %h3 Log in
-- unless flash.empty?
-  #flash
-    - flash.each do |key, val|
-      = flash_bootstrap key, val
 = form_tag login_path do
   %table
     %tr
