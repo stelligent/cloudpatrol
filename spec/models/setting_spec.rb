@@ -1,5 +1,131 @@
 require 'spec_helper'
 
 describe Setting do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @random_key = -> { "test_#{SecureRandom.hex}" }
+    @valid_attributes = { key: @random_key.call, value: "93", protected: "key" }
+  end
+
+  describe "creating new" do
+    context "with valid attributes" do
+      it "should be valid" do
+        Setting.new(@valid_attributes).should be_valid
+      end
+    end
+
+    context "without specifying key" do
+      it "should not be valid" do
+        Setting.new(@valid_attributes.update({ key: nil })).should_not be_valid
+      end
+    end
+
+    context "with duplicated key" do
+      it "should bot be valid" do
+        setting = Setting.create(@valid_attributes)
+        Setting.new(@valid_attributes.update({ key: setting.key })).should_not be_valid
+        setting.delete
+      end
+    end
+
+    context "with wrong protected value" do
+      it "should not be valid" do
+        Setting.new(@valid_attributes.update({ protected: SecureRandom.hex })).should_not be_valid
+      end
+    end
+
+    it "beautifies the key" do
+      key = "*** Testing Th&%^is *kiNd of_k#ey "
+      setting = Setting.create(@valid_attributes.update({ key: key }))
+      setting.should be_valid
+      setting.key.should == "testing_this_kind_of_key"
+      setting.delete
+    end
+
+    it "ensures protection" do
+      setting = Setting.create(@valid_attributes.update({ protected: nil }))
+      setting.should be_valid
+      setting.protected.should == "key"
+      setting.delete
+    end
+  end
+
+  describe "#key_protected?" do
+    before { @setting = Setting.create(@valid_attributes) }
+
+    context "when protected == key" do
+      before { @setting.update_column :protected, "key" }
+
+      it "should be valid" do
+        @setting.should be_valid
+      end
+
+      it "returns true" do
+        @setting.key_protected?.should be_true
+      end
+    end
+
+    context "when protected == both" do
+      before { @setting.update_column :protected, "both" }
+
+      it "should be valid" do
+        @setting.should be_valid
+      end
+
+      it "returns true" do
+        @setting.key_protected?.should be_true
+      end
+    end
+
+    context "when protected == none" do
+      before { @setting.update_column :protected, "none" }
+
+      it "should be valid" do
+        @setting.should be_valid
+      end
+
+      it "returns false" do
+        @setting.key_protected?.should be_false
+      end
+    end
+  end
+
+  describe "#value_protected?" do
+    before { @setting = Setting.create(@valid_attributes) }
+
+    context "when protected == key" do
+      before { @setting.update_column :protected, "key" }
+
+      it "should be valid" do
+        @setting.should be_valid
+      end
+
+      it "returns false" do
+        @setting.value_protected?.should be_false
+      end
+    end
+
+    context "when protected == both" do
+      before { @setting.update_column :protected, "both" }
+
+      it "should be valid" do
+        @setting.should be_valid
+      end
+
+      it "returns true" do
+        @setting.value_protected?.should be_true
+      end
+    end
+
+    context "when protected == none" do
+      before { @setting.update_column :protected, "none" }
+
+      it "should be valid" do
+        @setting.should be_valid
+      end
+
+      it "returns false" do
+        @setting.value_protected?.should be_false
+      end
+    end
+  end
 end
