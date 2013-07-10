@@ -5,7 +5,7 @@ class CommandsController < ApplicationController
     @settings_arr.each do |s|
       @settings[s[0]] = s[1] if s[1].present?
     end
-    unless @settings.keys.include?(:aws_access_key_id) and @settings.keys.include?(:aws_secret_access_key)
+    unless @settings[:aws_access_key_id] and @settings[:aws_secret_access_key]
       flash.now[:alert] = "AWS credentials are missing!"
       @disable_commands = true
     end
