@@ -6,14 +6,6 @@ describe SettingsController do
       get("/settings").should route_to("settings#index")
     end
 
-    it "routes to #new" do
-      get("/settings/new").should route_to("settings#new")
-    end
-
-    it "routes to #edit" do
-      get("/settings/1/edit").should route_to("settings#edit", id: "1")
-    end
-
     it "routes to #create" do
       post("/settings").should route_to("settings#create")
     end

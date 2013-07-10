@@ -1,24 +1,9 @@
 class SettingsController < ApplicationController
   before_filter :authorize
-  before_action :set_setting, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_setting, only: [ :update, :destroy ]
 
   def index
     @settings = Setting.all
-  end
-
-  def new
-    @setting = Setting.new
-  end
-
-  def show
-    if @setting
-      render json: @setting
-    else
-      render nothing: true
-    end
-  end
-
-  def edit
   end
 
   def create

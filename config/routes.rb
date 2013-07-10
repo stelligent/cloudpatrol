@@ -10,7 +10,7 @@ CloudpatrolRails::Application.routes.draw do
     get "logout" => :destroy
   end
 
-  resources :settings
+  resources :settings, except: [ :new, :edit ]
 
   controller :static_pages do
     get "favicon.ico" => :favicon         # temporary fix, remove when favicon is made

@@ -14,21 +14,6 @@ describe SettingsController do
       end
     end
 
-    describe "GET new" do
-      it "assigns a new setting as @setting" do
-        get :new, {}, valid_session
-        assigns(:setting).should be_a_new(Setting)
-      end
-    end
-
-    describe "GET edit" do
-      it "assigns the requested setting as @setting" do
-        setting = Setting.create! valid_attributes
-        get :edit, { id: setting.to_param }, valid_session
-        assigns(:setting).should eq(setting)
-      end
-    end
-
     describe "POST create" do
       describe "with valid params" do
         it "creates a new Setting" do
