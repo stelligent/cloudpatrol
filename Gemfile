@@ -13,7 +13,7 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'cloudpatrol', '~> 0.0.2', git: 'git@github.com:stelligent/cloudpatrol_gem.git'
 
-gem 'bcrypt-ruby'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Commenting turbolinks out for now
 # gem 'turbolinks'
