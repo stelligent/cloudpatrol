@@ -23,6 +23,14 @@ class Setting < ActiveRecord::Base
     end
   end
 
+  def self.to_hash
+    hash = {}
+    all.each do |s|
+      hash[s.key.to_sym] = s.value if s.value.present?
+    end
+    hash
+  end
+
 private
 
   def ensure_protection
