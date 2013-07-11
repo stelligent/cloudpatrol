@@ -33,6 +33,16 @@ describe Setting do
       end
     end
 
+    it "returns value as string" do
+      value = 93
+      setting = Setting.create(@valid_attributes.update({ value: value }))
+      setting.should be_valid
+      setting.reload
+      setting.value.class.should == String
+      setting.value.should == "93"
+      setting.delete
+    end
+
     it "beautifies the key" do
       key = "*** Testing Th&%^is *kiNd of_k#ey "
       setting = Setting.create(@valid_attributes.update({ key: key }))
