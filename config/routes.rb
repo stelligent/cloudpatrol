@@ -1,7 +1,7 @@
 CloudpatrolRails::Application.routes.draw do
   controller :commands, path: "commands" do
     get "" => :index, as: "commands"
-    get "perform" => :perform, as: "perform_command"
+    get ":class/:method" => :perform, as: "perform"
   end
 
   controller :sessions do

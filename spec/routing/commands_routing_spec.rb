@@ -7,7 +7,7 @@ describe CommandsController do
     end
 
     it "routes to #perform" do
-      get("/commands/perform").should route_to("commands#perform")
+      get("/commands/test_class/test_method").should route_to("commands#perform", class: "test_class", method: "test_method")
     end
   end
 end
