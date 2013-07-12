@@ -9,6 +9,7 @@ class CommandsController < ApplicationController
     end
   end
 
+  # TODO: Extract to TaskRunner class
   def perform
     if @command and creds and (args = retrieve_args_for(@command)).is_a?(String) and args.length > 0
       request = if args
