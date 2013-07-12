@@ -43,6 +43,7 @@ private
   end
 
   def retrieve_args_for command
+    case command[:class]
     when :EC2
       "ec2_instance_age" if command[:method] == :clean_instances
     when :OpsWorks
