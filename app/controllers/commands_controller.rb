@@ -10,9 +10,7 @@ class CommandsController < ApplicationController
   end
 
   def perform
-    if @command and creds
-      args = retrieve_args_for(@command)
-
+    if @command and creds and (args = retrieve_args_for(@command)).is_a?(String) and args.length > 0
       request = if args
         Cloudpatrol.perform(creds, @command[:class], @command[:method], args)
       else
