@@ -1,12 +1,12 @@
 %h3 Settings
 
 - if @settings.present?
-  %table.table.table-condensed{style: "width: auto"}
+  %table.table{style: "width: auto"}
     %thead
       %tr
         %th Key
         %th Value
-        / %th Last updated
+        %th Last updated
         %th Protection
         %th
     %tbody
@@ -14,7 +14,7 @@
         %tr
           %td= text_field_tag "setting[key]", setting.key, class: "input-large", disabled: (setting.key_protected? ? true : false)
           %td= text_field_tag "setting[value]", setting.value, class: "input-medium", disabled: (setting.value_protected? ? true : false)
-          / %td= content_tag :span, (distance_of_time_in_words Time.now - setting.updated_at) + " ago"
+          %td{class: "updated"}= content_tag :span, (distance_of_time_in_words Time.now - setting.updated_at) + " ago"
           %td
             = select_tag "setting[protected]", options_for_select(["none", "key", "both"], setting.protected || "none"), style: "width: auto"
             = hidden_field_tag "setting[id]", setting.id

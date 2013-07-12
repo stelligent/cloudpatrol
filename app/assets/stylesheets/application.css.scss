@@ -9,14 +9,8 @@ p {
   margin: 0;
 }
 
-.main.container {
-  margin: 20px auto;
-}
-
-.commands-block {
-  a {
-    text-decoration: none;
-  }
+td.updated {
+  vertical-align: middle;
 }
 
 span.aws-setting {
@@ -24,6 +18,20 @@ span.aws-setting {
   border: 1px dotted #aaa;
   &.undefined {
     color: #777;
+  }
+}
+
+input, select {
+  margin: 0 !important;
+}
+
+.main.container {
+  margin: 20px auto;
+}
+
+.commands-block {
+  a {
+    text-decoration: none;
   }
 }
 
