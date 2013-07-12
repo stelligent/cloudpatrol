@@ -11,16 +11,16 @@ class CommandsController < ApplicationController
 
   # TODO: Extract to TaskRunner class
   def perform
-    if @command and creds and (args = retrieve_args_for(@command)).is_a?(String) and args.length > 0
-      request = if args
-        Cloudpatrol.perform(creds, @command[:class], @command[:method], args)
-      else
-        Cloudpatrol.perform(creds, @command[:class], @command[:method])
-      end
+    if @command and creds
+      request_args = [ creds, log_table_name, @command[:class], @command[:method] ]
+      task_args = retrieve_args_for(@command)
+      request_args << task_args if task_args.present?
 
-      flash.now[:notice] = "#{@command} was executed"
+      request = Cloudpatrol.perform(*request_args)
+
+      flash[:notice] = "#{@command} was executed"
     else
-      flash.now[:alert] = "Wrong, wrong."
+      flash[:alert] = "Wrong, wrong."
     end
     redirect_to commands_path
   end
@@ -43,9 +43,8 @@ private
   end
 
   def retrieve_args_for command
-    arg = case command[:class]
     when :EC2
-      "ec2_instance_age" if command[:method] = :clean_instances
+      "ec2_instance_age" if command[:method] == :clean_instances
     when :OpsWorks
       case command[:method]
       when :clean_stacks
@@ -58,10 +57,14 @@ private
         "opsworks_app_age"
       end
     when :CloudFormation
-      "cloudformation_stack_age" if command[:method] = :clean_stacks
+      "cloudformation_stack_age" if command[:method] == :clean_stacks
     end
     return Setting.find_by_key(arg).try(:value) if arg
     nil
+  end
+
+  def log_table_name
+    Setting.find_by_key("dynamodb_log_table").try(:value)
   end
 
   def creds
