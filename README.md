@@ -73,6 +73,7 @@ Now that you've intalled Ruby and other packages, you will install CloudPatrol o
 
 1. ```git clone https://github.com/stelligent/cloudpatrol.git```
 1. ```cd ~/cloudpatrol```
+1. ```gem install pg -v 0.15.1```
 1. ```bundle install```
 1. ```bundle exec rake db:setup```
 1. ```bundle exec rake db:test:prepare```
