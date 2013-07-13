@@ -6,15 +6,15 @@ class SettingsController < ApplicationController
     @settings = Setting.all
   end
 
-  def create
-    @setting = Setting.new(setting_params)
+  # def create
+  #   @setting = Setting.new(setting_params)
 
-    if @setting.save
-      redirect_to @setting, notice: 'Setting was successfully created.'
-    else
-      render action: 'new'
-    end
-  end
+  #   if @setting.save
+  #     redirect_to @setting, notice: 'Setting was successfully created.'
+  #   else
+  #     render nothing: true
+  #   end
+  # end
 
   def update
     if @setting.update(setting_params)
@@ -36,15 +36,15 @@ class SettingsController < ApplicationController
 private
 
   def set_setting
-    @setting =
-    begin
-      Setting.find(params[:id])
-    rescue
-      Setting.find_by_key(params[:id])
-    end
+    @setting = Setting.find_by_id(params[:id]) or Setting.find_by_key(params[:id]) or raise ActiveRecord::RecordNotFound
   end
 
   def setting_params
-    params.require(:setting).permit(:key, :value, :protected)
+    permitted_fields = [ :key, :value, :protected ]
+    if @setting
+      permitted_fields.delete(:key) if @setting.key_protected?
+      permitted_fields.delete(:value) if @setting.value_protected?
+    end
+    params.require(:setting).permit(permitted_fields)
   end
 end

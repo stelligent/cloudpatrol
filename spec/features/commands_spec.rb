@@ -37,6 +37,12 @@ describe "Commands" do
 
       it { should_not have_selector "div.alert-error", text: "AWS credentials are missing!" }
       it { should have_link "perform" }
+
+      describe "trying to perform a command" do
+        before { click_link "perform" }
+
+        it { should have_selector "div.alert" }
+      end
     end
   end
 end

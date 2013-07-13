@@ -7,4 +7,8 @@ module CommandsHelper
       content_tag(:span, "#{key}", class: "aws-setting undefined")
     end, settings_path)
   end
+
+  def perform_link options
+    link_to "perform", { action: :perform }.update(options), class: "perform", id: "#{options[:class]}-#{options[:method]}" unless @disable_commands
+  end
 end
