@@ -41,7 +41,7 @@ CloudPatrol
 
 ## Description
 
-This app lets you inform people about the status of services you provide and projects you're responsible for. 
+This app lets you establish and automatically enforce team policies for your Amazon Web Services account.
 Clean installation has a superuser account with ```admin:admin``` credentials; be sure to change it after first login.
 
 While Rails can be installed on many operating systems, we've include detailed instructions for installing on Ubuntu 12.04 LTS.
