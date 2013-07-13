@@ -2,7 +2,7 @@ class CommandsController < ApplicationController
   before_action :discover_command, only: [ :perform ]
 
   def index
-    @settings = Setting.to_hash
+    @settings = Setting.all.to_hash
     unless @settings[:aws_access_key_id] and @settings[:aws_secret_access_key]
       flash.now[:alert] = "AWS credentials are missing!"
       @disable_commands = true
@@ -65,7 +65,7 @@ private
   end
 
   def log_table_name
-    Setting.find_by_key("dynamodb_log_table").try(:value)
+    Setting.find_by_key("dynamodb_log_table").try(:value) || "cloudpatrol-log"
   end
 
   def creds
