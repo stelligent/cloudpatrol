@@ -25,26 +25,26 @@ private
 
   def fetch_arg
     arg = case @command[:class]
-    when :EC2
-      "ec2_instance_age" if @command[:method] == :clean_instances
-    when :OpsWorks
+    when "EC2"
+      "ec2_instance_age" if @command[:method] == "clean_instances"
+    when "OpsWorks"
       case @command[:method]
-      when :clean_stacks
+      when "clean_stacks"
         "opsworks_stack_age"
-      when :clean_layers
+      when "clean_layers"
         "opsworks_layer_age"
-      when :clean_instances
+      when "clean_instances"
         "opsworks_instance_age"
-      when :clean_apps
+      when "clean_apps"
         "opsworks_app_age"
       end
     when :CloudFormation
-      "cloudformation_stack_age" if @command[:method] == :clean_stacks
+      "cloudformation_stack_age" if @command[:method] == "clean_stacks"
     end
 
     if arg
       if (s = Setting.find_by_key(arg).try(:value)).present?
-        s
+        s.to_i
       else
         raise "#{arg} must exist"
       end

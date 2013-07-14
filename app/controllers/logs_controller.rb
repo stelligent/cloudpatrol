@@ -11,7 +11,13 @@ class LogsController < ApplicationController
         t.items.each do |item|
           @log << item.attributes.to_hash
         end
-        @log.map!{ |item| { time: Time.parse(item["time"]), response: item["response"], action: item["action"] } }
+        @log.map! do |item|
+          {
+            time: Time.parse(item["time"]),
+            action: item["action"],
+            response: item["response"]
+          }
+        end
         @log.sort!{|x,y| y[:time] <=> x[:time] }
       else
         flash.now[:alert] = "Change your settings"
