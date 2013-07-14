@@ -11,6 +11,7 @@ CloudpatrolRails::Application.routes.draw do
   end
 
   resources :settings, except: [ :new, :edit ]
+  resources :logs, only: [ :index ]
 
   controller :static_pages do
     get "favicon.ico" => :favicon         # temporary fix, remove when favicon is made

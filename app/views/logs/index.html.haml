@@ -1,0 +1,15 @@
+%h3 Logs
+
+- if @log.present?
+  %table.table{style: "width: auto;"}
+    %thead
+      %tr
+        %th Time
+        %th Action
+        %th Response
+    %tbody
+      - @log.each do |msg|
+        %tr
+          %td= msg[:time]
+          %td= msg[:action]
+          %td= msg[:response]

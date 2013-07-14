@@ -8,6 +8,8 @@ describe "Settings" do
     visit root_path
   end
 
+  it { should have_link "Settings" }
+
   describe "index" do
     before { click_link "Settings" }
 

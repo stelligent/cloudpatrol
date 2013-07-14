@@ -8,6 +8,8 @@ describe "Commands" do
     visit root_path
   end
 
+  it { should have_link "Commands" }
+
   describe "index" do
     before { click_link "Commands" }
 
