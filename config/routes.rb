@@ -14,7 +14,12 @@ CloudpatrolRails::Application.routes.draw do
   resources :logs, only: [ :index ]
 
   controller :static_pages do
-    get "favicon.ico" => :favicon         # temporary fix, remove when favicon is made
+
+    # temporary fix, remove when favicon is made
+    get "favicon.ico" => :favicon
+    get "apple-touch-icon.png" => :favicon
+    get "apple-touch-icon-precomposed.png" => :favicon
+
     root to: :root
   end
 end
