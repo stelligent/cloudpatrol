@@ -22,8 +22,8 @@
         %td Clean Security Groups
         %td= perform_link class: :EC2, method: :clean_security_groups
       %tr
-        %td Release Elastic IP not associated with an Instance
-        %td= perform_link class: :EC2, method: :release_elastic_ip
+        %td Releases Elastic IPs not associated with any Instance
+        %td= perform_link class: :EC2, method: :clean_elastic_ips
 
     %thead
       %tr
