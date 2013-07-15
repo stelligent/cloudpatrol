@@ -11,7 +11,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
-gem 'cloudpatrol', '~> 0.0.2', git: 'https://github.com/stelligent/cloudpatrol_gem.git'
+gem 'cloudpatrol', '~> 0.1.0', git: 'https://github.com/stelligent/cloudpatrol_gem.git'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
 

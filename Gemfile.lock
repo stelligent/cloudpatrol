@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/stelligent/cloudpatrol_gem.git
-  revision: f3f71e45d05b033138e33246157ab89f1175a8be
+  revision: 79970f453a959390f88fce735b254687e464d0b4
   specs:
-    cloudpatrol (0.0.2)
+    cloudpatrol (0.1.0)
       aws-sdk (= 1.11.0)
       gli (= 2.6.0)
 
@@ -158,7 +158,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   bootstrap-sass
   capybara
-  cloudpatrol (~> 0.0.2)!
+  cloudpatrol (~> 0.1.0)!
   coffee-rails (~> 4.0.0)
   haml-rails
   jquery-rails
