@@ -6,6 +6,9 @@ class StaticPagesController < ApplicationController
     end
   end
 
+  def help
+  end
+
   def favicon
     render nothing: true
   end

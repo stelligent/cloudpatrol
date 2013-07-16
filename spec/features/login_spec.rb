@@ -22,13 +22,27 @@ describe "Login" do
         click_button "Log in"
       end
 
+      # Menu for logged in
+      it { should have_link "Commands", href: commands_path }
+      it { should have_link "Logs", href: logs_path }
+      it { should have_link "Settings", href: settings_path }
+      it { should have_link "Help", href: help_path }
       it { should have_link "Log out", href: logout_path }
+
+      describe "help page" do
+        before { click_link "Help" }
+
+        it { should have_selector "h3", text: "Help" }
+      end
     end
 
     describe "attempt with invalid params" do
       before { click_button "Log in" }
 
       it { should have_selector "div.alert", "Invalid credentials" }
+
+      # Menu for not logged in
+      it { should have_link "Log in" }
     end
   end
 end

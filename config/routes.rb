@@ -20,6 +20,7 @@ CloudpatrolRails::Application.routes.draw do
     get "apple-touch-icon.png" => :favicon
     get "apple-touch-icon-precomposed.png" => :favicon
 
+    get :help
     root to: :root
   end
 end
