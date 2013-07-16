@@ -20,7 +20,7 @@ class LogsController < ApplicationController
         end
         @log.sort!{|x,y| y[:time] <=> x[:time] }
       else
-        flash.now[:alert] = "Change your settings"
+        flash.now[:alert] = "DynamoDB table \"#{t.name}\" doesn't exist or is not active"
       end
     else
       flash.now[:alert] = "Change your settings"
