@@ -72,3 +72,18 @@
           = aws_setting :cloudformation_stack_age
           days
         %td= perform_link class: :CloudFormation, method: :clean_stacks
+
+  %table.table{style: "width: auto;"}
+    %thead
+      %tr
+        %th Schedule
+    %tbody
+      %tr
+        %td
+          Start EC2 Instances at
+          = aws_setting :ec2_instances_start_time
+          and stop them at
+          = aws_setting :ec2_instances_stop_time
+          automatically
+      %tr
+        %td= schedule_link
