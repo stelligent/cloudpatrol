@@ -13,6 +13,7 @@ describe "Settings" do
   describe "index" do
     before { click_link "Settings" }
 
+    it { should have_title "Settings | CloudPatrol" }
     it { should have_selector "h3", text: "Settings" }
     it { should have_selector "th", text: "Key"}
     it { should have_selector "th", text: "Value"}

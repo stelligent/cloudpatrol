@@ -13,6 +13,7 @@ describe "Commands" do
   describe "index" do
     before { click_link "Commands" }
 
+    it { should have_title "Commands | CloudPatrol" }
     it { should have_selector "h3", text: "Commands" }
     it { should have_selector "th", text: "EC2" }
     it { should have_selector "th", text: "IAM" }

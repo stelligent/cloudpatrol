@@ -10,7 +10,7 @@ describe "Login" do
   describe "page" do
     before { click_link "Log in" }
 
-    it { should have_title "CloudPatrol | Log in" }
+    it { should have_title "Log in | CloudPatrol" }
     it { should have_selector "h3", text: "Log in" }
     it { should have_field "name" }
     it { should have_field "password" }
@@ -32,6 +32,7 @@ describe "Login" do
       describe "help page" do
         before { click_link "Help" }
 
+        it { should have_title "Help | CloudPatrol" }
         it { should have_selector "h3", text: "Help" }
       end
     end
