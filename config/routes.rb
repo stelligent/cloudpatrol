@@ -1,4 +1,13 @@
 CloudpatrolRails::Application.routes.draw do
+  namespace :api, defaults: { format: :json } do
+    resources :settings, except: [ :new, :edit ]
+    controller :commands, path: "commands" do
+      get "" => :index, as: "commands"
+      get :schedule, as: "schedule"
+      get ":class/:method" => :perform, as: "perform"
+    end
+  end
+
   controller :commands, path: "commands" do
     get "" => :index, as: "commands"
     get :schedule, as: "schedule"
