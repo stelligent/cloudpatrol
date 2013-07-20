@@ -31,7 +31,7 @@ class SettingsController < ApplicationController
 private
 
   def set_setting
-    @setting = Setting.find_by_id(params[:id]) or Setting.find_by_key(params[:id]) or raise ActiveRecord::RecordNotFound
+    @setting ||= Setting.find(params[:id])
   end
 
   def setting_params
