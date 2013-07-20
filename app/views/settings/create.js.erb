@@ -1,0 +1,11 @@
+$("img#loader").css({"display": "none"});
+var new_setting_row = $("tr#new_setting");
+var button_row = $("a#new").parents("tr");
+
+<% if @success %>
+button_row.show();
+new_setting_row.before("<%= escape_javascript render(partial: 'setting', locals: { setting: @setting }) %>");
+new_setting_row.remove();
+<% elsif @setting.errors.any? %>
+new_setting_row.addClass("error");
+<% end %>

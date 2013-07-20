@@ -6,22 +6,17 @@ class SettingsController < ApplicationController
     @settings = Setting.all
   end
 
-  # def create
-  #   @setting = Setting.new(setting_params)
+  def create
+    @setting = Setting.new(setting_params)
+    @success = !!@setting.save
 
-  #   if @setting.save
-  #     redirect_to @setting, notice: 'Setting was successfully created.'
-  #   else
-  #     render nothing: true
-  #   end
-  # end
+    respond_to do |format|
+      format.js
+    end
+  end
 
   def update
-    if @setting.update(setting_params)
-      # redirect_to @setting, notice: 'Setting was successfully updated.'
-    else
-      # render action: 'edit'
-    end
+    @success = !!@setting.update(setting_params)
 
     respond_to do |format|
       format.js

@@ -7,8 +7,16 @@ synchronize = (trigger) ->
     url: "settings/"+id
     data: form.find("input[type!=hidden], select").serialize()
 
+push = (trigger) ->
+  form = trigger.parents("tr")
+  $("img#loader").css({"display": "inline"})
+  $.ajax
+    type: "POST"
+    url: "settings"
+    data: form.find("input").serialize()
+
 $(document).ready ->
-  $("select[id^=setting_protected]").on "change", ->
+  $(document).on "change", "select[id^=setting_protected]", ->
     form = $(this).parents("tr")
     key = form.find("input#setting_key")
     value = form.find("input#setting_value")
@@ -33,3 +41,13 @@ $(document).ready ->
 
   $("input[id^=setting_]").on "change", ->
     synchronize($(this))
+
+  $("a#new").on "click", ->
+    parent_row = $(this).parents("tr");
+    parent_table = $(this).parents("table");
+    if parent_table.find("tr#new_setting").size() == 0
+      parent_row.before '<tr class="control-group" id="new_setting"><td><input class="input-large" id="setting_key" name="setting[key]" type="text" value=""></td><td><input class="input-medium" id="setting_value" name="setting[value]" type="text" value=""></td><td colspan=3><input class="btn btn-primary" type="submit"></td></tr>'
+      parent_row.hide()
+
+  $(document).on "click", "tr#new_setting input[type=submit]", ->
+    push($(this));

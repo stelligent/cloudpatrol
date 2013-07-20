@@ -14,79 +14,70 @@ describe SettingsController do
       end
     end
 
-    # describe "POST create" do
-    #   describe "with valid params" do
-    #     it "creates a new Setting" do
-    #       expect {
-    #         post :create, { setting: valid_attributes }, valid_session
-    #       }.to change(Setting, :count).by(1)
-    #     end
+    describe "POST create" do
+      describe "with valid params" do
+        it "creates a new Setting" do
+          expect {
+            post :create, { setting: valid_attributes, format: :js }, valid_session
+          }.to change(Setting, :count).by(1)
+        end
 
-    #     it "assigns a newly created setting as @setting" do
-    #       post :create, { setting: valid_attributes }, valid_session
-    #       assigns(:setting).should be_a(Setting)
-    #       assigns(:setting).should be_persisted
-    #     end
+        it "assigns a newly created setting as @setting" do
+          post :create, { setting: valid_attributes, format: :js }, valid_session
+          assigns(:setting).should be_a(Setting)
+          assigns(:setting).should be_persisted
+        end
 
-    #     it "redirects to the created setting" do
-    #       post :create, {:setting => valid_attributes}, valid_session
-    #       response.should redirect_to(Setting.last)
-    #     end
-    #   end
+        it "assigns @success as true" do
+          post :create, { setting: valid_attributes, format: :js }, valid_session
+          assigns(:success).should be_true
+        end
 
-    #   describe "with invalid params" do
-    #     it "assigns a newly created but unsaved setting as @setting" do
-    #       Setting.any_instance.stub(:save).and_return(false)
-    #       post :create, { setting: invalid_attributes }, valid_session
-    #       assigns(:setting).should be_a_new(Setting)
-    #     end
+        it "renders the response" do
+          post :create, { setting: { key: "" }, format: :js }, valid_session
+          response.status.should == 200
+        end
+      end
 
-    #     it "re-renders the 'new' template" do
-    #       # Trigger the behavior that occurs when invalid params are submitted
-    #       Setting.any_instance.stub(:save).and_return(false)
-    #       post :create, {:setting => { "key" => "invalid value" }}, valid_session
-    #       response.should render_template("new")
-    #     end
-    #   end
-    # end
+      describe "with invalid params" do
+        it "assigns @success as false" do
+          Setting.any_instance.stub(:save).and_return(false)
+          post :create, { setting: { key: "" }, format: :js }, valid_session
+          assigns(:success).should be_false
+        end
+      end
+    end
 
-    # describe "PUT update" do
-    #   describe "with valid params" do
-    #     it "updates the requested setting" do
-    #       setting = Setting.create! valid_attributes
-    #       Setting.any_instance.should_receive(:update).with({ "key" => "MyString" })
-    #       put :update, {id: setting.to_param, setting: { "key" => "MyString" }, format: :js}, valid_session
-    #     end
+    describe "PUT update" do
+      describe "with valid params" do
+        it "updates the requested setting" do
+          setting = Setting.create! valid_attributes
+          Setting.any_instance.should_receive(:update).with({ "key" => "test_string" })
+          put :update, {id: setting.to_param, setting: { key: "test_string" }, format: :js}, valid_session
+        end
 
-    #     it "assigns the requested setting as @setting" do
-    #       setting = Setting.create! valid_attributes
-    #       put :update, { id: setting.to_param, setting: valid_attributes, format: :js }, valid_session
-    #       assigns(:setting).should eq(setting)
-    #     end
+        it "assigns the requested setting as @setting" do
+          setting = Setting.create! valid_attributes
+          put :update, { id: setting.to_param, setting: valid_attributes, format: :js }, valid_session
+          assigns(:setting).should eq(setting)
+        end
 
-    #     it "redirects to the setting" do
-    #       setting = Setting.create! valid_attributes
-    #       put :update, {:id => setting.to_param, :setting => valid_attributes}, valid_session
-    #       response.should redirect_to(setting)
-    #     end
-    #   end
+        it "renders the response" do
+          setting = Setting.create! valid_attributes
+          put :update, { id: setting.to_param, setting: valid_attributes, format: :js}, valid_session
+          response.status.should == 200
+        end
+      end
 
-    #   describe "with invalid params" do
-    #     it "assigns the setting as @setting" do
-    #       setting = Setting.create! valid_attributes
-    #       Setting.any_instance.stub(:save).and_return(false)
-    #       put :update, {:id => setting.to_param, :setting => { "key" => "invalid value" }}, valid_session
-    #       assigns(:setting).should eq(setting)
-    #     end
-
-    #     it "re-renders the 'edit' template" do
-    #       setting = Setting.create! valid_attributes
-    #       Setting.any_instance.stub(:save).and_return(false)
-    #       put :update, {:id => setting.to_param, :setting => { "key" => "invalid value" }}, valid_session
-    #       response.should render_template("edit")
-    #     end
-    #   end
-    # end
+      describe "with invalid params" do
+        it "assigns @success as false" do
+          setting = Setting.create! valid_attributes
+          Setting.any_instance.stub(:save).and_return(false)
+          put :update, { id: setting.to_param, setting: { key: "" }, format: :js}, valid_session
+          assigns(:success).should be_false
+        end
+      end
+    end
 
     describe "DELETE destroy" do
       it "destroys the requested setting" do

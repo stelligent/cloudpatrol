@@ -10,9 +10,9 @@ class CommandsController < ApplicationController
 
   def perform
     if TaskRunner.new(class: params[:class], method: params[:method]).run
-      flash[:notice] = "Command was executed, check the logs."
+      flash[:notice] = "Command was executed, check the logs"
     else
-      flash[:alert] = "Wrong, wrong."
+      flash[:alert] = "Failure"
     end
     redirect_to commands_path
   end

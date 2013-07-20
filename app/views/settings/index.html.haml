@@ -3,7 +3,7 @@
 %h3 Settings
 
 - if @settings.present?
-  %table.table{style: "width: auto"}
+  %table.table{style: "width: auto;"}
     %thead
       %tr
         %th Key
@@ -12,16 +12,8 @@
         %th Protection
         %th
     %tbody
-      - @settings.each do |setting|
-        %tr
-          %td= text_field_tag "setting[key]", setting.key, class: "input-large", disabled: (setting.key_protected? ? true : false)
-          %td= text_field_tag "setting[value]", setting.value, class: "input-medium", disabled: (setting.value_protected? ? true : false)
-          %td{class: "updated"}= content_tag :span, (distance_of_time_in_words Time.now - setting.updated_at) + " ago"
-          %td
-            = select_tag "setting[protected]", options_for_select(["none", "key", "both"], setting.protected || "none"), style: "width: auto"
-            = hidden_field_tag "setting[id]", setting.id
-          %td
-            = link_to "<i class='icon-remove' style='top: 4px; position: relative;'></i>".html_safe, setting, method: :delete, data: { confirm: 'Are you sure?' }, id: "setting_delete", style: "#{setting.key_protected? ? "display: none;" : ""}"
-            = content_tag :i, nil, class: "icon-lock", style: "top: 4px; position: relative; #{setting.key_protected? ? '' : 'display: none;'}", id: "setting_lock"
+      = render @settings
+      %tr
+        %td{colspan: 5}= content_tag :a, "+", class: "btn", id: "new"
 - else
   %h3 No settings.

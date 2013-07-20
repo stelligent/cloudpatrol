@@ -1,2 +1,8 @@
 $("img#loader").css({"display": "none"});
-$('input#setting_id[value="<%= @setting.id %>"]').parents("tr").find("td.updated").text("just now");
+var row = $('input#setting_id[value="<%= @setting.id %>"]').parents("tr");
+<% if @success %>
+row.removeClass("error");
+row.find("td.updated").text("just now");
+<% elsif @setting.errors.any? %>
+row.addClass("error");
+<% end %>
