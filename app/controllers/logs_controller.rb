@@ -25,5 +25,7 @@ class LogsController < ApplicationController
     else
       flash.now[:alert] = "Change your settings"
     end
+  rescue
+    flash.now[:alert] = "Error"
   end
 end

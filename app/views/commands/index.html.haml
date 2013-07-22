@@ -24,6 +24,12 @@
         %td Clean Security Groups
         %td= perform_link class: :EC2, method: :clean_security_groups
       %tr
+        %td
+          Delete ports assigned to the
+          %i default
+          security group
+        %td= perform_link class: :EC2, method: :clean_ports_in_default
+      %tr
         %td Release Elastic IPs not associated with any Instance
         %td= perform_link class: :EC2, method: :clean_elastic_ips
 
