@@ -39,3 +39,9 @@ Now that you've intalled Ruby and other packages, you will install CloudPatrol o
 1. ```bundle exec rake db:test:prepare```
 1. ```bundle exec rspec spec/```
 1. ```rails s```
+
+
+## Running CloudPatrol
+
+1. Launch and web browser and type http://<hostname>:3000
+1. Login to the application using the default credentials.
