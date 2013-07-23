@@ -14,7 +14,7 @@ There's also a [Ruby gem](https://github.com/stelligent/cloudpatrol_gem) - for a
 You'll need to first download and install Ubuntu 12.04 LTS. To do this, go to [Ubuntu](http://releases.ubuntu.com/precise/).
 
 
-## Installation of Rails on Ubuntu 12.04 LTS
+## Installing Rails on Ubuntu 12.04 LTS
 
 After you've installed Ubunu, follow the instructions below (which were adpated from [digitalocean](https://www.digitalocean.com/community/articles/how-to-install-ruby-on-rails-on-ubuntu-12-04-lts-precise-pangolin-with-rvm))
 
@@ -28,7 +28,7 @@ After you've installed Ubunu, follow the instructions below (which were adpated 
 1. ```rvm rubygems current```
 1. ```gem install rails```
 
-## Installation of CloudPatrol
+## Installing CloudPatrol
 
 Now that you've intalled Ruby and other packages, you will install CloudPatrol on this instance.
 
