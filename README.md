@@ -8,6 +8,8 @@ Clean installation has a superuser account with ```admin:admin``` credentials; b
 
 While Rails can be installed on many operating systems, we've include detailed instructions for installing on Ubuntu 12.04 LTS.
 
+There's also a [Ruby gem](https://github.com/stelligent/cloudpatrol_gem) that you can download and use [here](https://github.com/stelligent/cloudpatrol_gem)
+
 ## Configuration of Linux Instance
 
 You'll need to first download and install Ubuntu 12.04 LTS. To do this, go to [Ubuntu](http://releases.ubuntu.com/precise/).
