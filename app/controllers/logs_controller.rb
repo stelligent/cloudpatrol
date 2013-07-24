@@ -1,4 +1,6 @@
 class LogsController < ApplicationController
+
+  # TODO: Refactor as Cloudpatrol.get_log
   def index
     @settings = Setting.all.to_hash
     @log = []
@@ -18,7 +20,7 @@ class LogsController < ApplicationController
             response: item["response"]
           }
         end
-        @log.sort!{|x,y| y[:time] <=> x[:time] }
+        @log.sort!{ |x,y| y[:time] <=> x[:time] }
       else
         flash.now[:alert] = "DynamoDB table \"#{t.name}\" doesn't exist or is not active"
       end
