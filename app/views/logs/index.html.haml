@@ -2,16 +2,16 @@
 
 %h3 Logs
 
-- if @log.present?
+- if @log[:success]
   %table.table{style: "width: auto;"}
     %thead
       %tr
-        %th Time
         %th Action
         %th Response
     %tbody
-      - @log.each do |msg|
+      - @log[:log].each do |msg|
         %tr
-          %td= msg[:time]
+          %th{colspan: 2}= msg[:time]
+        %tr
           %td= msg[:action]
           %td= msg[:response]
