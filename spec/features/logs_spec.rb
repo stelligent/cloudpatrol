@@ -23,7 +23,7 @@ describe "Logs" do
         visit current_path
       end
 
-      it { should have_selector "div.alert-error", text: "Change your settings" }
+      it { should have_selector "div.alert-error" }
       it { should_not have_selector "table" }
     end
 
