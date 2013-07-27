@@ -43,5 +43,5 @@ Now that you've intalled Ruby and other packages, you will install CloudPatrol o
 
 ## Running CloudPatrol
 
-1. Launch and web browser and type http://[hostname]:3000
+1. Launch and web browser and type http://[hostname]:3000 (You will need to make sure that port 3000 is open)
 1. Login to the application using the default credentials (```admin:admin```).
