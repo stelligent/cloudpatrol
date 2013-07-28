@@ -19,7 +19,7 @@ You'll need to first download and install Ubuntu 12.04 LTS. To do this, go to [U
 After you've installed Ubunu, follow the instructions below.
 
 1. ```sudo apt-get update```
-1. ```sudo apt-get install curl nodejs git```
+1. ```sudo apt-get -y install curl nodejs git```
 1. ```\curl -L https://get.rvm.io | bash -s stable```
 1. ```source ~/.rvm/scripts/rvm```
 1. ```rvm requirements```
