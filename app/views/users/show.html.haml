@@ -1,0 +1,14 @@
+- title "Profile"
+
+%h3
+  Your profile
+  %small= link_to "Edit", edit_profile_path
+
+%table.table{style:"width: auto;"}
+  %tbody
+    %tr
+      %td Name
+      %td= current_user.name
+    %tr
+      %td API Key
+      %td= current_user.api_key

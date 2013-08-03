@@ -1,6 +1,6 @@
 %tr.control-group
   %td= text_field_tag "setting[key]", setting.key, class: "input-large", disabled: (setting.key_protected? ? true : false)
-  %td= text_field_tag "setting[value]", setting.value, class: "input-medium", disabled: (setting.value_protected? ? true : false)
+  %td= text_field_tag "setting[value]", (setting.masked and setting.value.present?) ? "reset me" : setting.value, class: "input-medium", disabled: (setting.value_protected? ? true : false), type: setting.masked ? "password" : "text"
   %td{class: "updated"}= content_tag :span, (distance_of_time_in_words Time.now - setting.updated_at) + " ago"
   %td
     = select_tag "setting[protected]", options_for_select(%w{ none key both }, setting.protected || "none"), style: "width: auto"

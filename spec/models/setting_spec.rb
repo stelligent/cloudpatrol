@@ -6,13 +6,16 @@ describe Setting do
     @valid_attributes = { key: @random_key.call, value: "93", protected: "key" }
   end
 
-  describe "creating new" do
-    context "with valid attributes" do
-      it "should be valid" do
-        Setting.new(@valid_attributes).should be_valid
-      end
-    end
+  let(:setting) { Setting.create(@valid_attributes) }
+  subject { setting }
 
+  it { should be_valid }
+  it { should respond_to(:key) }
+  it { should respond_to(:value) }
+  it { should respond_to(:protected) }
+  it { should respond_to(:masked) }
+
+  describe "creating new" do
     context "without specifying key" do
       it "should not be valid" do
         Setting.new(@valid_attributes.update({ key: nil })).should_not be_valid
@@ -21,9 +24,7 @@ describe Setting do
 
     context "with duplicated key" do
       it "should bot be valid" do
-        setting = Setting.create(@valid_attributes)
         Setting.new(@valid_attributes.update({ key: setting.key })).should_not be_valid
-        setting.delete
       end
     end
 

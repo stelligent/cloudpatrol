@@ -1,0 +1,19 @@
+- title "Edit profile"
+
+%h3
+  Edit your profile
+  %small= link_to "Back", profile_path
+
+= form_tag profile_path, method: :put do
+  %table
+    %tr
+      %td= label_tag :name
+      %td= text_field_tag :name, current_user.name, disabled: true
+    %tr
+      %td= label_tag :password, "New password"
+      %td= password_field_tag :password
+    %tr
+      %td= label_tag :password_confirmation, "Repeat new password"
+      %td= password_field_tag :password_confirmation
+    %tr
+      %td{colspan: 2}= button_tag "Edit", class: "btn btn-primary btn-block"

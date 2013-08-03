@@ -27,6 +27,7 @@ describe "Login" do
       it { should have_link "Logs", href: logs_path }
       it { should have_link "Settings", href: settings_path }
       it { should have_link "Help", href: help_path }
+      it { should have_link "Profile", href: profile_path }
       it { should have_link "Log out", href: logout_path }
 
       describe "help page" do

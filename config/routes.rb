@@ -22,6 +22,7 @@ CloudpatrolRails::Application.routes.draw do
 
   resources :settings, except: [ :new, :edit ]
   resources :logs, only: [ :index ]
+  resource :profile, controller: :users, only: [ :show, :edit, :update ]
 
   controller :static_pages do
 

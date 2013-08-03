@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130707222319) do
+ActiveRecord::Schema.define(version: 20130801032839) do
 
   create_table "settings", force: true do |t|
     t.string   "key"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20130707222319) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "protected",  default: ""
+    t.boolean  "masked",     default: false
   end
 
   create_table "users", force: true do |t|
