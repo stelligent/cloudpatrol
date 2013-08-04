@@ -28,7 +28,7 @@ class CommandsController < ApplicationController
     redirect_to commands_path
   end
 
-private
+  private
 
   def get_settings
     @settings = Setting.all.to_hash

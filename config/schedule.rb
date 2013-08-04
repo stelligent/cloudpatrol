@@ -3,12 +3,24 @@
 # Redefining default runner job for Rails 4
 job_type :runner, "cd :path && bin/rails runner ':task' :output"
 
-if start_time = Time.parse(@ec2_instances_start_time) and stop_time = Time.parse(@ec2_instances_stop_time)
-  every :day, at: start_time do
-    runner 'TaskRunner.new(class: "EC2", method: "start_instances").run'
-  end
+# Parsing arguments
+begin
+  start_time = Time.parse(@ec2_instances_start_time)
+rescue ArgumentError, TypeError
+  raise ArgumentError, "ec2_instances_start_time is in the wrong format"
+end
 
-  every :day, at: stop_time do
-    runner 'TaskRunner.new(class: "EC2", method: "stop_instances").run'
-  end
+begin
+  stop_time = Time.parse(@ec2_instances_stop_time)
+rescue ArgumentError, TypeError
+  raise ArgumentError, "ec2_instances_stop_time is in the wrong format"
+end
+
+# Crontab contents
+every :day, at: start_time do
+  runner 'TaskRunner.new(class: "EC2", method: "start_instances").run'
+end
+
+every :day, at: stop_time do
+  runner 'TaskRunner.new(class: "EC2", method: "stop_instances").run'
 end
