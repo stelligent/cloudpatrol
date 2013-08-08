@@ -1,6 +1,8 @@
 - title "Settings"
 
-%h3 Settings
+%h3
+  Settings
+  %small= link_to "export as JSON config file", controller: :settings, action: :index, format: :json
 
 - if @settings.present?
   %table.table{style: "width: auto;"}

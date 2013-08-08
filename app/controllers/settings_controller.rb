@@ -4,6 +4,10 @@ class SettingsController < ApplicationController
 
   def index
     @settings = Setting.all
+    respond_to do |format|
+      format.html
+      format.json { send_data(@settings.to_hash.to_json, type: 'application/json', disposition: 'attachment', filename: 'config.json') }
+    end
   end
 
   def create
