@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/stelligent/cloudpatrol_gem.git
-  revision: d72f361cce0c8392fca2b14d188a6ced04328d4b
+  revision: 6dd2a84590128cd586a2c9d47deb24e979c38d7a
   specs:
     cloudpatrol (0.1.1)
       aws-sdk (= 1.11.0)
