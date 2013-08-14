@@ -24,8 +24,8 @@ After you've installed Ubunu, follow the instructions below.
 1. ```\curl -L https://get.rvm.io | bash -s stable```
 1. ```source ~/.rvm/scripts/rvm```
 1. ```rvm requirements```
-1. ```rvm install 2.0.0```
-1. ```rvm use 2.0.0 --default```
+1. ```rvm install 1.9.3```
+1. ```rvm use 1.9.3 --default```
 1. ```rvm rubygems current```
 1. ```gem install rails```
 
