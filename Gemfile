@@ -12,7 +12,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 
-gem 'cloudpatrol', '0.1.2', git: 'https://github.com/stelligent/cloudpatrol_gem.git'
+gem 'cloudpatrol', '0.1.2'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
 
