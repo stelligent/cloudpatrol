@@ -1,0 +1,140 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "AWS CloudFormation Template to configure chef on an EC2 Instance",
+
+  "Parameters" : {
+    "KeyName" : {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+      "Type" : "String"
+    },
+
+    "InstanceType" : {
+      "Description" : "Jenkins EC2 instance type",
+      "Type" : "String",
+      "Default" : "m1.medium",
+      "ConstraintDescription" : "must be a valid EC2 instance type."
+    }
+  },
+
+  "Mappings" : {
+    "RegionMap" : {
+      "us-east-1"      : { "AMI" : "ami-05355a6c" },
+      "us-west-1"      : { "AMI" : "ami-951945d0" },
+      "us-west-2"      : { "AMI" : "ami-16fd7026" },
+      "eu-west-1"      : { "AMI" : "ami-24506250" },
+      "sa-east-1"      : { "AMI" : "ami-3e3be423" },
+      "ap-southeast-1" : { "AMI" : "ami-74dda626" },
+      "ap-northeast-1" : { "AMI" : "ami-dcfa4edd" }
+    }
+  },
+
+  "Resources" : {
+    "User" : {
+      "Type" : "AWS::IAM::User",
+      "Properties" : {
+        "Path": "/",
+        "Policies": [{
+          "PolicyName": "root",
+          "PolicyDocument": { "Statement":[{
+            "Effect":"Allow",
+            "Action":"*",
+            "Resource":"*"
+          }
+                                          ]}
+        }]
+      }
+    },
+
+    "HostKeys" : {
+      "Type" : "AWS::IAM::AccessKey",
+      "Properties" : {
+        "UserName" : { "Ref": "User" }
+      }
+    },
+
+    "Ec2Instance" : {
+      "Type" : "AWS::EC2::Instance",
+      "Metadata" : {
+        "AWS::CloudFormation::Init" : {
+          "config" : {
+            "packages" : {
+              "rubygems" : {
+                "rails" : []
+              },
+              "yum" : {
+                "gcc-c++"       : [],
+                "autoconf"      : [],
+                "automake"      : [],
+                "libxml2-devel" : [],
+                "libxslt-devel" : []
+              }
+            }
+          }
+        }
+      },
+
+      "Properties" : {
+        "KeyName" : { "Ref" : "KeyName" },
+        "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
+        "SecurityGroups" : [ {"Ref" : "FrontendGroup"} ],
+        "InstanceType"   : { "Ref" : "InstanceType" },
+        "Tags": [ { "Key": "Name", "Value": "CloudPatrol" } ],
+        "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
+          "#!/bin/bash\n",
+          "yum update -y aws-cfn-bootstrap\n",
+
+          "# Remove Ruby 1.8.7\n",
+          "yum erase -y ruby rubygems\n",
+
+          "# Install Ruby 1.9.3\n",
+          "yum -y install ruby19-devel\n",
+
+          "# Move Ruby 1.9.3 to Default Ruby\n",
+          "ln -s /usr/bin/ruby1.9 /usr/bin/ruby\n",
+          "ln -s /usr/bin/gem1.9 /usr/bin/gem\n",
+
+          "/opt/aws/bin/cfn-init -s ", { "Ref" : "AWS::StackId" }, " -r Ec2Instance ",
+          "    --access-key ", { "Ref" : "HostKeys" },
+          "    --secret-key ", { "Fn::GetAtt" : [ "HostKeys", "SecretAccessKey" ]},
+          "    --region ", { "Ref" : "AWS::Region" }, "\n",
+
+          "git clone https://github.com/stelligent/cloudpatrol.git\n",
+          "cd ~/cloudpatrol\n",
+          "bundle install\n",
+          "bundle exec rake db:setup\n",
+          "rails s\n",
+
+
+          "/opt/aws/bin/cfn-signal", " -e 0", " '", { "Ref" : "WaitHandle" }, "'\n"
+        ]]}}
+      }
+    },
+
+    "FrontendGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Enable SSH",
+        "SecurityGroupIngress" : [
+          {"IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : "0.0.0.0/0"}
+        ]
+      }
+    },
+
+    "WaitHandle" : {
+      "Type" : "AWS::CloudFormation::WaitConditionHandle"
+    },
+
+    "WaitCondition" : {
+      "Type" : "AWS::CloudFormation::WaitCondition",
+      "DependsOn" : "Ec2Instance",
+      "Properties" : {
+        "Handle" : { "Ref" : "WaitHandle" },
+        "Timeout" : "1500"
+      }
+    }
+  },
+
+  "Outputs" : {
+  }
+}
