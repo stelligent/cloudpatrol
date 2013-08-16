@@ -14,9 +14,8 @@ gem 'bootstrap-sass'
 
 gem 'cloudpatrol', '0.1.3'
 
-gem "therubyracer", :require => 'v8'
-
 gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'sqlite3'
 
 group :doc do
   gem 'sdoc', require: false
@@ -29,5 +28,3 @@ end
 group :test, :development do
   gem 'rspec-rails'
 end
-
-gem 'sqlite3'
