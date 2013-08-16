@@ -12,6 +12,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 
+gem "therubyracer", :require => 'v8'
+
 gem 'cloudpatrol', '0.1.3'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
