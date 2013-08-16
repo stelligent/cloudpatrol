@@ -17,3 +17,5 @@
 
 # Ignore AWS credentials
 /config/aws.yml
+
+vendor/*
