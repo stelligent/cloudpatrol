@@ -12,7 +12,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 
-gem "therubyracer", :require => 'v8'
+gem "therubyracer", "0.10.0"
 
 gem 'cloudpatrol', '0.1.3'
 
