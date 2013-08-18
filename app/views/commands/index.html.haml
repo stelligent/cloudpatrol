@@ -84,7 +84,11 @@
   %table.table{style: "width: auto;"}
     %thead
       %tr
-        %th Schedule
+        %th
+          Schedule
+          = surround "(", ")" do
+            Current server time:
+            = Time.now.to_s(:time)
     %tbody
       %tr
         %td
@@ -94,4 +98,4 @@
           = aws_setting :ec2_instances_stop_time
           automatically
       %tr
-        %td= schedule_link
+        %td= schedule_links
