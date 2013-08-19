@@ -4,6 +4,7 @@ CloudpatrolRails::Application.routes.draw do
     controller :commands, path: "commands" do
       get "" => :index, as: "commands"
       get :schedule, as: "schedule"
+      get :unschedule, as: "unschedule"
       get ":class/:method" => :perform, as: "perform"
     end
   end
@@ -11,6 +12,7 @@ CloudpatrolRails::Application.routes.draw do
   controller :commands, path: "commands" do
     get "" => :index, as: "commands"
     get :schedule, as: "schedule"
+    get :unschedule, as: "unschedule"
     get ":class/:method" => :perform, as: "perform"
   end
 

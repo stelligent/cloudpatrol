@@ -1,5 +1,5 @@
 class Api::CommandsController < ApiController
-  before_filter :get_commands, except: [ :schedule ]
+  before_filter :get_commands, except: [ :schedule, :unschedule ]
 
   def index
     formatted_commands = []
@@ -24,7 +24,17 @@ class Api::CommandsController < ApiController
   def schedule
     render json: {
       response: if system("cd #{Rails.root}; bundle exec whenever --update-crontab --set '#{Setting.to_hash.select{ |k,v| [ :ec2_instances_start_time, :ec2_instances_stop_time ].include?(k) }.to_a.map{ |s| "#{s[0]}=#{s[1]}" }.join("&")}'")
-        "Crontab successfully updated"
+        "Schedule updated"
+      else
+        "Failure"
+      end
+    }
+  end
+
+  def schedule
+    render json: {
+      response: if system("cd #{Rails.root}; bundle exec whenever -c")
+        "Schedule removed"
       else
         "Failure"
       end
