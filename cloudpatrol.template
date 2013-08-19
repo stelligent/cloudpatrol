@@ -112,7 +112,7 @@
           "cd cloudpatrol\n",
           "bundle install --without development test doc\n",
           "rake db:setup\n",
-          "rails s -p80\n",
+          "nohup rails s -p80 &\n",
 
 
           "/opt/aws/bin/cfn-signal", " -e 0", " '", { "Ref" : "WaitHandle" }, "'\n"
