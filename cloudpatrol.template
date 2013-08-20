@@ -72,6 +72,14 @@
                 "sqlite-devel"  : []
               }
             },
+            "services" : {
+              "sysvinit" : {
+                "railsd" : {
+                  "enabled" : "true",
+                  "ensureRunning" : "true"
+                }
+              }
+            },
             "files" : {
               "/root/.gemrc" : {
                 "content" : { "Fn::Join" : ["", [
@@ -82,6 +90,31 @@
                 "content" : { "Fn::Join" : ["", [
                   "gem: --no-ri --no-rdoc"
                 ]]}
+              },
+              "/etc/init.d/railsd" : {
+                "mode" : "0x644", 
+                "content" : { "Fn::Join" : ["", [
+                "#! /bin/sh\n",
+                "### BEGIN INIT INFO\n",
+                "# Default-Start:     2 3 4 5\n",
+                "# Default-Stop:      0 1 6\n",
+                "### END INIT INFO\n",
+                "PORT=80\n",
+                "RAILS_ROOT=\"/root/cloudpatrol\"\n",
+                "COMMAND=\"rails server -p$PORT -d\"\n",
+                "do_start()\n",
+                "{\n",
+                "  cd $RAILS_ROOT && $COMMAND\n",
+                "}\n",
+                "case \"$1\" in\n",
+                "  start)\n",
+                "    do_start\n",
+                "  ;;\n",
+                "esac\n"
+                ]]},
+                "mode"  : "000544",
+                "owner" : "root",
+                "group" : "root"
               }
             }
           }
@@ -113,7 +146,6 @@
           "bundle install --without development test doc\n",
           "rake db:setup\n",
           "rails server -p80 -d\n",
-
 
           "/opt/aws/bin/cfn-signal", " -e 0", " '", { "Ref" : "WaitHandle" }, "'\n"
         ]]}}
