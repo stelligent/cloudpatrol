@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
 
+gem 'simplecov', :require => false, :group => :test
+
 gem 'rails', '~> 4.0.0'
 
 gem 'whenever', require: false
