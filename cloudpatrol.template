@@ -60,6 +60,7 @@
           "config" : {
             "packages" : {
               "rubygems" : {
+                "chef" : [ "0.10.2" ],
                 "bundler" : []
               },
               "yum" : {
@@ -69,7 +70,11 @@
                 "libxml2-devel" : [],
                 "libxslt-devel" : [],
                 "git"           : [],
-                "sqlite-devel"  : []
+                "sqlite-devel"  : [],
+
+                 "ruby-devel" : [],
+                 "make" : [],
+                 "rubygems" : []
               }
             },
             "services" : {
@@ -81,6 +86,27 @@
               }
             },
             "files" : {
+              "/etc/chef/solo.rb" : {
+                "content" : { "Fn::Join" : ["", [
+                  "log_level :info\n",
+                  "log_location STDOUT\n",
+                  "file_cache_path \"/var/chef-solo\"\n",
+                  "cookbook_path \"/var/chef-solo/cookbooks\"\n",
+                  "json_attribs \"/etc/chef/node.json\"\n",
+                  "recipe_url \"", { "Ref" : "RecipeURL" }, "\"\n"
+                ]] },
+                "mode" : "000644",
+                "owner" : "root",
+                "group" : "root"
+              },
+              "/etc/chef/node.json" : {
+                "content" : { "Fn::Join" : ["", [
+                   :
+                ]] },
+                "mode" : "000644",
+                "owner" : "root",
+                "group" : "root"
+              },
               "/root/.gemrc" : {
                 "content" : { "Fn::Join" : ["", [
                   "gem: --no-ri --no-rdoc"
