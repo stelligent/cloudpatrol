@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 
 gem 'simplecov', :require => false, :group => :test
+gem 'watir', '~> 4.0.2'
 
 gem 'rails', '~> 4.0.0'
 
