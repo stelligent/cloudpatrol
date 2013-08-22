@@ -19,3 +19,5 @@
 /config/aws.yml
 
 vendor/*
+
+.DS_Store

@@ -1,3 +1,4 @@
+@cloudportal_app
 Feature: CloudPatrol Login
   As an end user
   I would like to login to CloudPatrol
