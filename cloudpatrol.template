@@ -8,8 +8,13 @@
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
       "Type" : "String"
     },
+    "RecipeURL" : {
+      "Description" : "The location of the recipe tarball",
+      "Type": "String"
+    },
 
     "sha1" : {
+      "Default" : "dev",
       "Description" : "sha1 to checkout",
       "Type" : "String"
     },
@@ -65,7 +70,6 @@
           "config" : {
             "packages" : {
               "rubygems" : {
-                "chef" : [ "0.10.2" ],
                 "bundler" : []
               },
               "yum" : {
@@ -77,9 +81,7 @@
                 "git"           : [],
                 "sqlite-devel"  : [],
 
-                 "ruby-devel" : [],
-                 "make" : [],
-                 "rubygems" : []
+                 "make" : []
               }
             },
             "services" : {
@@ -105,9 +107,7 @@
                 "group" : "root"
               },
               "/etc/chef/node.json" : {
-                "content" : { "Fn::Join" : ["", [
-                   :
-                ]] },
+                "content" : {"Fn::Join":["",[""]]},
                 "mode" : "000644",
                 "owner" : "root",
                 "group" : "root"
@@ -174,7 +174,7 @@
           "cd /root/\n",
           "git clone https://github.com/stelligent/cloudpatrol.git\n",
           "cd cloudpatrol\n",
-          "git checkout ", { "Ref" : "sha1" }m "\n",
+          "git checkout ", { "Ref" : "sha1" }, "\n",
           "bundle install --without development test doc\n",
           "rake db:setup\n",
           "rails server -p80 -d\n",
@@ -182,10 +182,6 @@
           "/opt/aws/bin/cfn-signal", " -e 0", " '", { "Ref" : "WaitHandle" }, "'\n"
         ]]}}
       }
-    },
-
-    "IPAddress" : {
-      "Type" : "AWS::EC2::EIP"
     },
 
     "FrontendGroup" : {
@@ -215,7 +211,7 @@
 
   "Outputs" : {
     "CloudPatrolURL" : {
-      "Value" : { "Fn::Join" : ["", ["http://", { "Ref" : "IPAddress" }]] }
+      "Value" : { "Fn::GetAtt" : [ "Ec2Instance", "PublicIp" ] }
     }
   }
 }
