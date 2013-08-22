@@ -3,9 +3,17 @@ require 'watir'
 
 Before do
   @browser = Watir::Browser.new
+  if not Dir.exists? "screenshots"
+    FileUtils.mkdir "screenshots"
+  end
 end
 
-After do
+After do |scenario|
+  if scenario.failed? 
+    screenshot_file_path = "screenshots/#{scenario.title}-#{Time.now}.png"
+    @browser.screenshot.save screenshot_file_path
+    embed screenshot_file_path, 'image/png'
+  end
   @browser.close
 end
 
