@@ -21,13 +21,17 @@ Given(/^the CloudPatrol URL has been specified$/) do
   ENV['CloudPatrolURL'].should_not be_nil
 end
 
+Given(/^the password has been specified$/) do
+  ENV['CloudPatrolPassword'].should_not be_nil
+end
+
 When(/^I navigate to \/login$/) do
   @browser.goto ENV['CloudPatrolURL']+'/login'
 end
 
-When(/^I login with username "(.*?)" and password "(.*?)"$/) do |username, password|
+When(/^I login with username "(.*?)"$/) do |username|
   @browser.text_field(:name => 'name').set username
-  @browser.text_field(:name => 'password').set password
+  @browser.text_field(:name => 'password').set ENV['CloudPatrolPassword'] 
   @browser.button(:name => 'button').click 
 end
 
