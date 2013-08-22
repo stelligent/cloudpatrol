@@ -5,6 +5,7 @@
   %td
     = select_tag "setting[protected]", options_for_select(%w{ none key both }, setting.protected || "none"), style: "width: auto"
     = hidden_field_tag "setting[id]", setting.id
+    = hidden_field_tag "setting[masked]", setting.masked, name: nil
   %td
     = link_to "<i class='icon-remove' style='top: 4px; position: relative;'></i>".html_safe, setting, method: :delete, data: { confirm: 'Are you sure?' }, id: "setting_delete", style: "#{setting.key_protected? ? "display: none;" : ""}"
     = content_tag :i, nil, class: "icon-lock", style: "top: 4px; position: relative; #{setting.key_protected? ? '' : 'display: none;'}", id: "setting_lock"

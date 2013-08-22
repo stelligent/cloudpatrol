@@ -1,15 +1,21 @@
 synchronize = (trigger) ->
   form = trigger.parents("tr")
   id = form.find("input#setting_id").val()
-  $("img#loader").css({"display": "inline"})
+  masked = form.find("input#setting_masked").val()
+
+  $("img#loader").css {"display": "inline"}
+  if masked == "true" and trigger.attr("id") != "setting_value"
+    form.find("input#setting_value").attr("type", "hidden")
   $.ajax
     type: "PUT"
     url: "settings/"+id
     data: form.find("input[type!=hidden], select").serialize()
+  if masked == "true"
+    form.find("input#setting_value").attr("type", "password")
 
 push = (trigger) ->
   form = trigger.parents("tr")
-  $("img#loader").css({"display": "inline"})
+  $("img#loader").css {"display": "inline"}
   $.ajax
     type: "POST"
     url: "settings"
@@ -37,10 +43,10 @@ $(document).ready ->
       value.prop "disabled", true
       remove.css { display: "none" }
       lock.css { display: "inline-block" }
-    synchronize($(this))
+    synchronize $(this)
 
   $("input[id^=setting_]").on "change", ->
-    synchronize($(this))
+    synchronize $(this)
 
   $("a#new").on "click", ->
     parent_row = $(this).parents("tr");
@@ -50,4 +56,4 @@ $(document).ready ->
       parent_row.hide()
 
   $(document).on "click", "tr#new_setting input[type=submit]", ->
-    push($(this));
+    push $(this)
