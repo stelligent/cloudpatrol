@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "AWS CloudFormation Template to configure chef on an EC2 Instance",
+  "Description" : "AWS CloudFormation Template to run CloudPatrol",
 
   "Parameters" : {
     "KeyName" : {
@@ -162,7 +162,17 @@
         ]
       }
     },
+	"IPAddress" : {
+	  "Type" : "AWS::EC2::EIP"
+	},
 
+	"IPAssociation" : {
+	  "Type" : "AWS::EC2::EIPAssociation",
+	  "Properties" : {
+		"InstanceId" : { "Ref" : "Ec2Instance" },
+		"EIP" : { "Ref" : "IPAddress" }
+	  }
+	},
     "WaitHandle" : {
       "Type" : "AWS::CloudFormation::WaitConditionHandle"
     },
@@ -178,5 +188,8 @@
   },
 
   "Outputs" : {
+	"InstanceIPAddress" : {
+	  "Value" : { "Fn::Join" : ["", ["http://", { "Ref" : "IPAddress" }, "/"]] }
+    }
   }
 }
