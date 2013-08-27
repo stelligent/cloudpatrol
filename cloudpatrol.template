@@ -36,6 +36,19 @@
   },
 
   "Resources" : {
+    "CloudPatrolDNSRecordSet" : {
+       "Type" : "AWS::Route53::RecordSet",
+       "Properties" : {
+         "HostedZoneName" : "devopscloud.com.",
+         "Name" : "cloudpatrol.devopscloud.com.",
+         "Type" : "A",
+         "TTL" : "900",
+         "ResourceRecords" : [
+           { "Ref" : "IPAddress" }
+         ]
+       }
+    },
+
     "User" : {
       "Type" : "AWS::IAM::User",
       "Properties" : {
