@@ -1,4 +1,5 @@
 class CommandsController < ApplicationController
+  before_filter :authorize
   before_filter :get_settings, only: [ :index, :schedule ]
 
   def index
@@ -18,7 +19,7 @@ class CommandsController < ApplicationController
   end
 
   def schedule
-    args = @settings.select{ |k,v| [ :ec2_instances_start_time, :ec2_instances_stop_time ].include?(k) }.to_a.map{ |s| "#{s[0]}=#{s[1]}" }.join("&")
+    args = @settings.select{ |k,v| [ :rules_run_at ].include?(k) }.to_a.map{ |s| "#{s[0]}=#{s[1]}" }.join("&")
     response = system("cd #{Rails.root}; bundle exec whenever --update-crontab --set '#{args}'")
     if response
       flash[:notice] = "Schedule updated"

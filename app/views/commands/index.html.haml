@@ -92,10 +92,7 @@
     %tbody
       %tr
         %td
-          Start EC2 Instances at
-          = aws_setting :ec2_instances_start_time
-          and stop them at
-          = aws_setting :ec2_instances_stop_time
-          automatically
+          Run each rule (except starting and stopping EC2 Instances) once a day at
+          = aws_setting :rules_run_at
       %tr
         %td= schedule_links

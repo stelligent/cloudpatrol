@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 private
 
   def authorize
-    if current_user or grant_api_access
+    if current_user
       true
     else
       redirect_to root_path, alert: "Unauthorized"
