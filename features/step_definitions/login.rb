@@ -17,6 +17,10 @@ After do |scenario|
   @browser.close
 end
 
+Given(/^I am a foo:$/) do |table|
+  puts table.hashes 
+end
+
 Given(/^the CloudPatrol URL has been specified$/) do
   ENV['CloudPatrolURL'].should_not be_nil
 end
