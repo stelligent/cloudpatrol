@@ -15,12 +15,12 @@
 
     "sha1" : {
       "Default" : "dev",
-      "Description" : "sha1 to checkout",
+      "Description" : "sha1 or branch HEAD to checkout",
       "Type" : "String"
     },
 
     "InstanceType" : {
-      "Description" : "Jenkins EC2 instance type",
+      "Description" : "EC2 instance type",
       "Type" : "String",
       "Default" : "m1.medium",
       "ConstraintDescription" : "must be a valid EC2 instance type."
@@ -46,12 +46,13 @@
         "Path": "/",
         "Policies": [{
           "PolicyName": "root",
-          "PolicyDocument": { "Statement":[{
-            "Effect":"Allow",
-            "Action":"*",
-            "Resource":"*"
-          }
-                                          ]}
+          "PolicyDocument": { 
+            "Statement":[{
+              "Effect":"Allow",
+              "Action":"*",
+              "Resource":"*"
+            }
+          ]}
         }]
       }
     },
@@ -98,9 +99,7 @@
                   "log_level :info\n",
                   "log_location STDOUT\n",
                   "file_cache_path \"/var/chef-solo\"\n",
-                  "cookbook_path \"/var/chef-solo/cookbooks\"\n",
-                  "json_attribs \"/etc/chef/node.json\"\n",
-                  "recipe_url \"", { "Ref" : "RecipeURL" }, "\"\n"
+                  "cookbook_path \"/var/chef-solo/cookbooks\"\n"
                 ]] },
                 "mode" : "000644",
                 "owner" : "root",
@@ -170,6 +169,8 @@
           "    --access-key ", { "Ref" : "HostKeys" },
           "    --secret-key ", { "Fn::GetAtt" : [ "HostKeys", "SecretAccessKey" ]},
           "    --region ", { "Ref" : "AWS::Region" }, "\n",
+
+          "curl -L https://www.opscode.com/chef/install.sh | bash\n",
 
           "cd /root/\n",
           "git clone https://github.com/stelligent/cloudpatrol.git\n",
