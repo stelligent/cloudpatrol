@@ -8,13 +8,9 @@
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
       "Type" : "String"
     },
-    "RecipeURL" : {
-      "Description" : "The location of the recipe tarball",
-      "Type": "String"
-    },
 
     "sha1" : {
-      "Default" : "dev",
+      "Default" : "master",
       "Description" : "sha1 or branch HEAD to checkout",
       "Type" : "String"
     },
