@@ -1,4 +1,5 @@
 class CommandsController < ApplicationController
+  before_filter :authorize
   before_filter :get_settings, only: [ :index, :schedule ]
 
   def index
