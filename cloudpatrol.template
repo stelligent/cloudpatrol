@@ -166,8 +166,6 @@
           "    --secret-key ", { "Fn::GetAtt" : [ "HostKeys", "SecretAccessKey" ]},
           "    --region ", { "Ref" : "AWS::Region" }, "\n",
 
-          "curl -L https://www.opscode.com/chef/install.sh | bash\n",
-
           "cd /root/\n",
           "git clone https://github.com/stelligent/cloudpatrol.git\n",
           "cd cloudpatrol\n",
