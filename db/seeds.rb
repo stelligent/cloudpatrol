@@ -1,4 +1,4 @@
-admin_user = User.find(name: "admin")
+admin_user = User.where(name => "admin")
 if admin_user.nil?
   User.create(name: "admin", password: "admin", password_confirmation: "admin")
 
