@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/stelligent/cloudpatrol_gem.git
+  revision: a51b49532a6ddcda6c6986430a0e6db86ce26afe
+  tag: 1.0.1
+  specs:
+    cloudpatrol (0.1.2)
+      aws-sdk (= 1.24.0)
+      gli (= 2.6.0)
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -27,9 +37,9 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.10)
-    aws-sdk (1.11.0)
+    aws-sdk (1.24.0)
       json (~> 1.4)
-      nokogiri (>= 1.4.4)
+      nokogiri (>= 1.4.4, < 1.6.0)
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.3.2.1)
@@ -41,11 +51,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    childprocess (0.3.9)
+      ffi (~> 1.0, >= 1.0.11)
     chronic (0.9.1)
-    cloudpatrol (0.1.3)
-      aws-sdk (= 1.11.0)
-      gli (= 2.6.0)
-      json
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -53,10 +61,13 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    commonwatir (4.0.0)
     diff-lcs (1.2.4)
+    docile (1.1.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    ffi (1.9.3)
     gli (2.6.0)
     haml (4.0.3)
       tilt
@@ -72,15 +83,14 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.0)
     libv8 (3.16.14.3)
+    lockfile (2.1.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
-    mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.7.7)
-    nokogiri (1.6.0)
-      mini_portile (~> 0.5.0)
+    nokogiri (1.5.10)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -113,6 +123,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rubyzip (1.0.0)
     sass (3.2.9)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -121,6 +132,17 @@ GEM
     sdoc (0.3.20)
       json (>= 1.1.3)
       rdoc (~> 3.10)
+    selenium-webdriver (2.37.0)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip (~> 1.0.0)
+      websocket (~> 1.0.4)
+    simplecov (0.8.1)
+      docile (~> 1.1.0)
+      lockfile (>= 2.1.0)
+      multi_json
+      simplecov-html (~> 0.8.0)
+    simplecov-html (0.8.0)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -146,6 +168,12 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     uuidtools (2.1.4)
+    watir (4.0.2)
+      commonwatir (~> 4)
+      watir-webdriver
+    watir-webdriver (0.6.4)
+      selenium-webdriver (>= 2.18.0)
+    websocket (1.0.7)
     whenever (0.8.3)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
@@ -159,7 +187,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   bootstrap-sass
   capybara
-  cloudpatrol (= 0.1.3)
+  cloudpatrol!
   coffee-rails (~> 4.0.0)
   haml-rails
   jquery-rails
@@ -167,7 +195,9 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
+  simplecov
   sqlite3
   therubyracer
   uglifier (>= 1.3.0)
+  watir (~> 4.0.2)
   whenever
