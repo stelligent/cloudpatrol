@@ -48,6 +48,7 @@ describe SettingsController do
       end
     end
 
+    #note these tests dont appear to respect the permitted attributes stuff for rails4?
     describe "PUT update" do
       describe "with valid params" do
         it "updates the requested setting" do

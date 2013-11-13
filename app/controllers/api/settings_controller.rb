@@ -6,7 +6,7 @@ class Api::SettingsController < ApiController
   end
 
   def create
-    @setting = Setting.new(params[:setting])
+    @setting = Setting.new(get_params)
     @setting.save
     render json: @setting
   end
@@ -16,7 +16,7 @@ class Api::SettingsController < ApiController
   end
 
   def update
-    @setting.update_attributes(params[:setting])
+    @setting.update_attributes(get_params)
     render json: @setting
   end
 
@@ -26,6 +26,10 @@ class Api::SettingsController < ApiController
   end
 
 private
+
+  def get_params
+    params.require(:setting).permit(:key, :value, :protected, :masked)
+  end
 
   def get_setting
     @setting ||= (Setting.find_by_key(params[:id]) or Setting.find_by_id(params[:id]))
