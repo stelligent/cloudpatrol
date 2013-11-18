@@ -34,23 +34,7 @@ private
   end
 
   def fetch_arg
-    setting_key = case @command[:class]
-          when :EC2
-            'ec2_instance_age' if @command[:method] == :clean_instances
-          when :OpsWorks
-            case @command[:method]
-            when :clean_stacks
-              'opsworks_stack_age'
-            when :clean_layers
-              'opsworks_layer_age'
-            when :clean_instances
-              'opsworks_instance_age'
-            when :clean_apps
-              'opsworks_app_age'
-            end
-          when :CloudFormation
-            'cloudformation_stack_age' if @command[:method] == :clean_stacks
-          end
+    setting_key = map_command_class_and_method_to_setting_key(@command[:class], @command[:method])
 
     if setting_key
       setting_value = retrieve_setting_value(setting_key)
@@ -64,12 +48,32 @@ private
     end
   end
 
+  def map_command_class_and_method_to_setting_key(class_name, method_name)
+    case class_name
+      when :EC2
+        'ec2_instance_age' if method_name == :clean_instances
+      when :OpsWorks
+        case method_name
+          when :clean_stacks
+            'opsworks_stack_age'
+          when :clean_layers
+            'opsworks_layer_age'
+          when :clean_instances
+            'opsworks_instance_age'
+          when :clean_apps
+            'opsworks_app_age'
+        end
+      when :CloudFormation
+        'cloudformation_stack_age' if method_name == :clean_stacks
+    end
+  end
+
   def retrieve_setting_value(setting_key)
     Setting.find_by_key(setting_key).try(:value)
   end
 
   def log_table_name
-    Setting.find_by_key('dynamodb_log_table').try(:value) || 'cloudpatrol-log'
+    retrieve_setting_value('dynamodb_log_table') || 'cloudpatrol-log'
   end
 
   def creds
