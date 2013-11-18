@@ -34,7 +34,7 @@ private
   end
 
   def fetch_arg
-    arg = case @command[:class]
+    setting_key = case @command[:class]
           when :EC2
             'ec2_instance_age' if @command[:method] == :clean_instances
           when :OpsWorks
@@ -52,15 +52,20 @@ private
             'cloudformation_stack_age' if @command[:method] == :clean_stacks
           end
 
-    if arg
-      if (s = Setting.find_by_key(arg).try(:value)).present?
-        s.to_i
+    if setting_key
+      setting_value = retrieve_setting_value(setting_key)
+      if setting_value.present?
+        setting_value.to_i
       else
-        raise "#{arg} must exist"
+        raise "#{setting_key} must exist"
       end
     else
       nil
     end
+  end
+
+  def retrieve_setting_value(setting_key)
+    Setting.find_by_key(setting_key).try(:value)
   end
 
   def log_table_name
