@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/stelligent/cloudpatrol_gem.git
-  revision: 73e57c1cd7ab8753576ca3895091dd43c002ca60
+  revision: bfb59cb4aa3b57d1bf91a8d6894dd36ed96e978c
   ref: head
   branch: master
   specs:
