@@ -75,12 +75,6 @@ private
         case method_name
           when :clean_stacks
             'opsworks_stack_age'
-          when :clean_layers
-            'opsworks_layer_age'
-          when :clean_instances
-            'opsworks_instance_age'
-          when :clean_apps
-            'opsworks_app_age'
           else
             nil
         end
