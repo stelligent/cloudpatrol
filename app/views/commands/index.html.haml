@@ -20,9 +20,9 @@
           = aws_setting :ec2_instance_age
           days
         %td= perform_link class: :EC2, method: :clean_instances
-      %tr
+      %tr{style: 'color: grey'}
         %td Clean Security Groups
-        %td= perform_link class: :EC2, method: :clean_security_groups
+        %td perform
       %tr
         %td
           Delete ports assigned to the
@@ -37,9 +37,9 @@
       %tr
         %th{colspan: 2} IAM
     %tbody
-      %tr
+      %tr{style: 'color: grey'}
         %td Delete Users that do not have MFA enabled
-        %td= perform_link class: :IAM, method: :clean_users
+        %td perform
 
     %thead
       %tr
