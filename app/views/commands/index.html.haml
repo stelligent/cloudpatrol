@@ -51,24 +51,6 @@
           = aws_setting :opsworks_stack_age
           days
         %td= perform_link class: :OpsWorks, method: :clean_stacks
-      %tr
-        %td
-          Delete Layers older than
-          = aws_setting :opsworks_layer_age
-          days
-        %td= perform_link class: :OpsWorks, method: :clean_layers
-      %tr
-        %td
-          Delete Instances older than
-          = aws_setting :opsworks_instance_age
-          days
-        %td= perform_link class: :OpsWorks, method: :clean_instances
-      %tr
-        %td
-          Delete Apps older than
-          = aws_setting :opsworks_app_age
-          days
-        %td= perform_link class: :OpsWorks, method: :clean_apps
 
     %thead
       %tr
