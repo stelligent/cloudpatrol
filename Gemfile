@@ -18,6 +18,7 @@ gem "therubyracer"
 
 #gem 'cloudpatrol', '0.1.3'
 gem 'cloudpatrol', :git => 'git://github.com/stelligent/cloudpatrol_gem.git', :branch => 'master', :ref =>'head'
+#gem 'cloudpatrol', :path => '/Users/erickascic/github/cloudpatrol_gem'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'sqlite3'
