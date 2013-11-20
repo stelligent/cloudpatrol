@@ -5,6 +5,8 @@
   %small= link_to "export as JSON config file", controller: :settings, action: :index, format: :json
 
 - if @settings.present?
+  %span{style: 'color:red'}BEWARE:
+  %span{style: 'color:black'}If AWS credentials are blank, then an applied instance profile will be used when CloudPatrol is running within AWS.
   %table.table{style: "width: auto;"}
     %thead
       %tr
