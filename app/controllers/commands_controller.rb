@@ -4,8 +4,8 @@ class CommandsController < ApplicationController
 
   def index
     unless @settings[:aws_access_key_id] and @settings[:aws_secret_access_key]
-      flash.now[:alert] = "AWS credentials are missing!"
-      @disable_commands = true
+      flash.now[:alert] = 'AWS credentials are missing! Instance profiles may apply.'
+      #@disable_commands = true
     end
   end
 
