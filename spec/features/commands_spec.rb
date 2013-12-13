@@ -27,8 +27,8 @@ describe "Commands" do
         visit current_path
       end
 
-      it { should have_selector "div.alert-error", text: "AWS credentials are missing!" }
-      it { should_not have_link "perform" }
+      it { should have_selector "div.alert-error", text: "AWS credentials are missing! Instance profiles may apply." }
+      # it { should_not have_link "perform" }
     end
 
     context "if there are AWS credentials" do
@@ -38,7 +38,7 @@ describe "Commands" do
         visit current_path
       end
 
-      it { should_not have_selector "div.alert-error", text: "AWS credentials are missing!" }
+      it { should_not have_selector "div.alert-error", text: "AWS credentials are missing! Instance profiles may apply." }
       it { should have_link "perform" }
 
       # TODO: Test this whole thing
