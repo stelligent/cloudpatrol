@@ -1,2 +1,2 @@
 require 'selenium-webdriver'
-Selenium::WebDriver::Firefox::Binary.path='/Applications/Firefox 3.6.app/Contents/MacOS/firefox-bin'
+Selenium::WebDriver::Firefox::Binary.path='/usr/local/bin/firefox'
