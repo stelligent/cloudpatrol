@@ -1,14 +1,14 @@
 require 'rubygems'
 require 'watir'
 
-Before do
+Before ('@cloudportal_app, @login') do
   @browser = Watir::Browser.new
   if not Dir.exists? "screenshots"
     FileUtils.mkdir "screenshots"
   end
 end
 
-After do |scenario|
+After ('@cloudportal_app, @login') do |scenario|
   if scenario.failed? 
     screenshot_file_path = "screenshots/#{scenario.title}-#{Time.now}.png"
     @browser.screenshot.save screenshot_file_path
