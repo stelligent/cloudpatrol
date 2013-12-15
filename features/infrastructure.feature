@@ -9,12 +9,3 @@ Feature: Scripted Provisioning of CloudPatrol Environment
     Scenario: Is the proper version of Ruby installed?
         When I run "ruby -v"
         Then I should see "ruby 1.9.3"
-
-    Scenario Outline: These gems should be present
-        When I run "sudo gem list"
-        Then I should see "<output>"
-
-        Examples: gems should be present
-            | output  |
-            | bundler |
-            | aws-sdk |

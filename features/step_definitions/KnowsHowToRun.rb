@@ -26,4 +26,4 @@ module KnowsHowToRun
 
 end
 
-#World(KnowsHowToRun)
+World(KnowsHowToRun)

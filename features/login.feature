@@ -1,4 +1,4 @@
-@cloudportal_app
+@cloudportal_app @login
 Feature: CloudPatrol Login
   As an end user
   I would like to login to CloudPatrol
