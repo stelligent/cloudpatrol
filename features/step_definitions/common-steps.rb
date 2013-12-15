@@ -1,4 +1,5 @@
 require "rubygems"
+require "KnowsHowToRun"
 
 #-------------------------
 # Local or remote testing
@@ -10,7 +11,7 @@ end
 
 # Run tests remotely using ssh
 Given /^I am sshed into the \w*\s*environment$/ do
-  run_cmd
+  run_cmd 
 end
 
 #-------------------------
