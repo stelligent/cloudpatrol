@@ -1,5 +1,7 @@
 require "spec_helper"
 
+puts "#{Time.now} :: commmands tests running"
+
 describe CommandsController do
   describe "routing" do
     it "routes to #index" do
@@ -11,3 +13,5 @@ describe CommandsController do
     end
   end
 end
+
+puts "#{Time.now} :: commmands tests complete"

@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+puts "#{Time.now} :: settings tests running"
+
 describe "Settings" do
   subject { page }
 
@@ -67,3 +69,5 @@ describe "Settings" do
     end
   end
 end
+puts "#{Time.now} :: settings tests running"
+

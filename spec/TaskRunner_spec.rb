@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+puts "#{Time.now} :: task runner tests running"
+
 describe 'TaskRunner' do
 
   context 'clean stacks' do
@@ -42,3 +44,5 @@ describe 'TaskRunner' do
     setting.save
   end
 end
+
+puts "#{Time.now} :: task runner tests complete"

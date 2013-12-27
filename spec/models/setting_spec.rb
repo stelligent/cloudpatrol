@@ -1,5 +1,8 @@
 require 'spec_helper'
 
+puts "#{Time.now} :: setting tests running"
+
+
 describe Setting do
   before do
     @random_key = -> { "test_#{SecureRandom.hex}" }
@@ -140,3 +143,6 @@ describe Setting do
     end
   end
 end
+
+puts "#{Time.now} :: setting tests complete"
+
