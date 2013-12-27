@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+puts "#{Time.now} :: settings controller tests running"
+
 describe SettingsController do
   before { @admin = User.find_by_name("admin") }
   let(:valid_attributes) { { "key" => "key_#{SecureRandom.hex}", "value" => "test_value", "protected" => "none" } }
@@ -96,3 +98,5 @@ describe SettingsController do
     end
   end
 end
+
+puts "#{Time.now} :: settings controller tests complete"

@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+puts "#{Time.now} :: commands tests running"
+
 describe "Commands" do
   subject { page }
 
@@ -51,3 +53,5 @@ describe "Commands" do
     end
   end
 end
+
+puts "#{Time.now} :: commands tests complete"
