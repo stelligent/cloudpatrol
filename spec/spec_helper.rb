@@ -1,7 +1,11 @@
 $stdout.sync = true
 
+
+
 require 'simplecov'
+puts "starting rails"
 SimpleCov.start 'rails'
+puts "rails started, running tests"
 
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
