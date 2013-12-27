@@ -1,12 +1,9 @@
 $stdout.sync = true
 
-
-
 require 'simplecov'
-puts "starting rails"
+puts "#{Time.now} :: starting rails"
 SimpleCov.start 'rails'
-puts "rails started, running tests"
-
+puts "#{Time.now} rails started, running tests"
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
