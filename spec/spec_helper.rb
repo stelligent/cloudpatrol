@@ -1,9 +1,7 @@
 $stdout.sync = true
 
 require 'simplecov'
-puts "#{Time.now} :: starting rails"
 SimpleCov.start 'rails'
-puts "#{Time.now} :: rails started, running tests"
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
@@ -19,10 +17,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
-puts "#{Time.now} :: checking for pending migrations"
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
-puts "#{Time.now} :: configuring rspec"
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -51,5 +47,3 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
-puts "#{Time.now} rspec helper complete"
-

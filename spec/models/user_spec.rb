@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-puts "#{Time.now} :: user tests running"
-
 describe User do
   before do
     @random_name = -> { SecureRandom.hex }
@@ -31,5 +29,3 @@ describe User do
     end
   end
 end
-
-puts "#{Time.now} :: user tests complete"

@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-puts "#{Time.now} :: login tests running"
-
 describe "Login" do
   subject { page }
 
@@ -50,6 +48,3 @@ describe "Login" do
     end
   end
 end
-
-
-puts "#{Time.now} :: login tests complete"

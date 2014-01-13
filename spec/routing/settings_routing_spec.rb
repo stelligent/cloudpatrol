@@ -1,7 +1,5 @@
 require "spec_helper"
 
-puts "#{Time.now} :: settings controller tests running"
-
 describe SettingsController do
   describe "routing" do
     it "routes to #index" do
@@ -21,5 +19,3 @@ describe SettingsController do
     end
   end
 end
-
-puts "#{Time.now} :: settings controller tests complete"
