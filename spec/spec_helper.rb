@@ -1,5 +1,3 @@
-intentionally breaking the build[ )
-
 $stdout.sync = true
 
 require 'simplecov'
