@@ -17,7 +17,7 @@ You'll need to first download and install Ubuntu 12.04 LTS. To do this, go to [U
 
 ## Installing Rails on Ubuntu 12.04 LTS
 
-After you've installed Ubunu, follow the instructions below.
+After you've installed Ubuntu, follow the instructions below.
 
 1. ```sudo apt-get update```
 1. ```sudo apt-get -y install curl nodejs git```
@@ -49,7 +49,7 @@ Now that you've intalled Ruby and other packages, you will install CloudPatrol o
 
 ## LICENSE
 
-Copyright (c) 2013 Stelligent Systems LLC
+Copyright (c) 2013-2014 Stelligent Systems LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
