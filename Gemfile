@@ -4,7 +4,7 @@ ruby '1.9.3'
 gem 'simplecov', :require => false, :group => :test
 
 gem 'rails', '~> 4.0.0'
-
+gem "cloudformation-ruby-dsl"
 gem 'whenever', require: false
 
 gem 'haml-rails'
