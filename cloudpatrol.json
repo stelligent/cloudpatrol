@@ -18,7 +18,7 @@
     "InstanceType" : {
       "Description" : "EC2 instance type",
       "Type" : "String",
-      "Default" : "m1.medium",
+      "Default" : "c3.large",
       "ConstraintDescription" : "must be a valid EC2 instance type."
     }
   },
@@ -154,26 +154,24 @@
         "InstanceType"   : { "Ref" : "InstanceType" },
         "Tags": [ { "Key": "Name", "Value": "CloudPatrol" } ],
         "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
-          "#!/bin/bash\n",
+          "#!/bin/bash -e\n",
           "yum update -y aws-cfn-bootstrap\n",
-
-          "# Install ruby 1.9.3\n",
-          "wget https://s3.amazonaws.com/OpenDelivery/resources/rpm/ruby-1.9.3p0-2.amzn1.x86_64.rpm\n",
-          "rpm -Uvh ruby-1.9.3p0-2.amzn1.x86_64.rpm\n",
-
-          "/opt/aws/bin/cfn-init -s ", { "Ref" : "AWS::StackId" }, " -r Ec2Instance ",
-          "    --access-key ", { "Ref" : "HostKeys" },
-          "    --secret-key ", { "Fn::GetAtt" : [ "HostKeys", "SecretAccessKey" ]},
-          "    --region ", { "Ref" : "AWS::Region" }, "\n",
-
-          "cd /root/\n",
+          "gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3\n",
+          "yum -y groupinstall 'Development Tools'\n",
+          "yum -y install git gcc ruby-devel zlib-devel libxml2 libxslt libxml2-devel libxslt-devel mlocate\n",
+          "updatedb\n",
+          "curl -L https://get.rvm.io | bash -s stable\n",
+          "source /usr/local/rvm/scripts/rvm\n",
+          "rvm requirements\n",
+          "rvm install 1.9.3\n",
+          "rvm use 1.9.3 --default\n",
+          "rvm rubygems current\n",
+          "gem install rails --no-ri --no-rdoc\n",
           "git clone https://github.com/stelligent/cloudpatrol.git\n",
-          "cd cloudpatrol\n",
-          "git checkout ", { "Ref" : "sha1" }, "\n",
+          "cd ~/cloudpatrol\n",
           "bundle install --without development test doc\n",
-          "rake db:setup\n",
+          "bundle exec rake db:setup\n",
           "rails server -p80 -d\n",
-
           "/opt/aws/bin/cfn-signal", " -e 0", " '", { "Ref" : "WaitHandle" }, "'\n"
         ]]}}
       }
