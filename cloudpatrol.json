@@ -100,9 +100,7 @@
                                 "curl-devel": [],
                                 "sqlite-devel": [],
                                 "libyaml-devel": [],
-                                "nodejs": [],
-                                "nginx": []
-
+                                "nodejs": []
                             }
                         },
                         "services": {
