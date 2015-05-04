@@ -77,45 +77,30 @@ hooks:
 #   in the script specified in "location" starting from the root of the 
 #   revision's file bundle.
   ApplicationStop:
-    - location: 
-      timeout:
-      runas:
-    - location: 
-      timeout:
-      runas: 
+    - location: scripts/applicationStop.sh
+      timeout: 15
+      runas: root
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   BeforeInstall:
-    - location: 
-      timeout:
-      runas: 
-    - location: 
-      timeout:
-      runas:
+    - location: scripts/beforeInstall.sh
+      timeout: 15
+      runas:  root
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   AfterInstall:
-    - location:     
-      timeout: 
-      runas:
-    - location: 
-      timeout:
-      runas:
+    - location: scripts/afterInstall.sh
+      timeout: 600
+      runas: root
 # During the ApplicationInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ApplicationStart:
-    - location:     
-      timeout: 
-      runas:
-    - location: 
-      timeout:
-      runas:
+    - location: scripts/applicationStart.sh   
+      timeout: 15
+      runas: root
 # During the ValidateService deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ValidateService:
-    - location:     
-      timeout: 
-      runas:
-    - location: 
-      timeout:
-      runas:
+    - location: scripts/validateService.sh   
+      timeout: 15
+      runas: root
