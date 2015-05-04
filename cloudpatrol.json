@@ -96,7 +96,12 @@
                                 "libxslt": [],
                                 "libxml2-devel": [],
                                 "libxslt-devel": [],
-                                "mlocate": []
+                                "mlocate": [],
+                                "curl-devel": [],
+                                "sqlite-devel": [],
+                                "libyaml-devel": [],
+                                "nodejs": [],
+                                "nginx": []
 
                             }
                         },
@@ -209,7 +214,6 @@
                                 "yum -y update aws-cfn-bootstrap\n",
                                 "export zone=`curl http://169.254.169.254/latest/meta-data/placement/availability-zone`\n",
                                 "export region=${zone%?}\n",
-                                "yum -y install \n",
                                 "aws s3 cp s3://aws-codedeploy-$region/latest/install . --region $region\n",
                                 "chmod +x ./install\n",
                                 "./install auto\n",
