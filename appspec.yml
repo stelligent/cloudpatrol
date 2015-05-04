@@ -36,7 +36,6 @@ files:
 #   section may cause associated deployments to fail.
 permissions:
   - object: /cloudpatrol
-    pattern: *
 #    except:
     owner: root
     group: root
@@ -53,53 +52,22 @@ permissions:
 #   the "hooks" section altogether. A blank or incomplete "hooks" section
 #   may cause associated deployments to fail.
 hooks:
-# For each deployment lifecycle event, specify multiple "location" entries 
-#   if you want to run multiple scripts during that event.
-# You can specify "timeout" as the number of seconds to wait until failing the deployment 
-#   if the specified scripts do not run within the specified time limit for the 
-#   specified event. For example, 900 seconds is 15 minutes. If not specified, 
-#   the default is 1800 seconds (30 minutes).
-#   Note that the maximum amount of time that all scripts must finish executing 
-#   for each individual deployment lifecycle event is 3600 seconds (1 hour). 
-#   Otherwise, the deployment will stop and AWS CodeDeploy will consider the deployment
-#   to have failed to the instance. Make sure that the total number of seconds 
-#   that are specified in "timeout" for all scripts in each individual deployment 
-#   lifecycle event does not exceed a combined 3600 seconds (1 hour).
-# For deployments to Amazon Linux and Ubuntu Server  instances,
-#   you can specify "runas" in an event to
-#   run as the specified user. For more information, see the documentation.
-#   If you are deploying to Windows Server instances,
-#   remove "runas" altogether.
-# If you do not want to run any commands during a particular deployment
-#   lifecycle event, remove that event declaration altogether. Blank or 
-#   incomplete event declarations may cause associated deployments to fail.
-# During the ApplicationStop deployment lifecycle event, run the commands 
-#   in the script specified in "location" starting from the root of the 
-#   revision's file bundle.
   ApplicationStop:
     - location: scripts/applicationStop.sh
       timeout: 15
       runas: root
-# During the BeforeInstall deployment lifecycle event, run the commands 
-#   in the script specified in "location".
   BeforeInstall:
     - location: scripts/beforeInstall.sh
       timeout: 15
       runas:  root
-# During the AfterInstall deployment lifecycle event, run the commands 
-#   in the script specified in "location".
   AfterInstall:
     - location: scripts/afterInstall.sh
       timeout: 600
       runas: root
-# During the ApplicationInstall deployment lifecycle event, run the commands 
-#   in the script specified in "location".
   ApplicationStart:
     - location: scripts/applicationStart.sh   
       timeout: 15
       runas: root
-# During the ValidateService deployment lifecycle event, run the commands 
-#   in the script specified in "location".
   ValidateService:
     - location: scripts/validateService.sh   
       timeout: 15
