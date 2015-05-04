@@ -1,0 +1,394 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "AWS CloudFormation Template to run CloudPatrol",
+    "Parameters": {
+        "KeyName": {
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+            "Type": "String"
+        },
+        "sha1": {
+            "Default": "master",
+            "Description": "sha1 or branch HEAD to checkout",
+            "Type": "String"
+        },
+        "InstanceType": {
+            "Description": "EC2 instance type",
+            "Type": "String",
+            "Default": "c3.large",
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        }
+    },
+    "Mappings": {
+        "RegionMap": {
+            "us-east-1": {
+                "AMI": "ami-1ecae776"
+            },
+            "us-west-2": {
+                "AMI": "ami-e7527ed7"
+            }
+        }
+    },
+    "Resources": {
+        "User": {
+            "Type": "AWS::IAM::User",
+            "Properties": {
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "root",
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": "*",
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "HostKeys": {
+            "Type": "AWS::IAM::AccessKey",
+            "Properties": {
+                "UserName": {
+                    "Ref": "User"
+                }
+            }
+        },
+        "Ec2Instance": {
+            "Type": "AWS::EC2::Instance",
+            "Metadata": {
+                "AWS::CloudFormation::Init": {
+                    "config": {
+                        "services": {
+                            "sysvinit": {
+                                "railsd": {
+                                    "enabled": "true",
+                                    "ensureRunning": "true"
+                                }
+                            }
+                        },
+                        "files": {
+                            "/root/.gemrc": {
+                                "content": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "gem: --no-ri --no-rdoc"
+                                        ]
+                                    ]
+                                }
+                            },
+                            "/etc/gemrc": {
+                                "content": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "gem: --no-ri --no-rdoc"
+                                        ]
+                                    ]
+                                }
+                            },
+                            "/etc/init.d/railsd": {
+                                "mode": "000544",
+                                "content": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "#! /bin/sh\n",
+                                            "### BEGIN INIT INFO\n",
+                                            "# Default-Start:     2 3 4 5\n",
+                                            "# Default-Stop:      0 1 6\n",
+                                            "### END INIT INFO\n",
+                                            "PORT=80\n",
+                                            "RAILS_ROOT=\"/root/cloudpatrol\"\n",
+                                            "COMMAND=\"rails server -p$PORT -d\"\n",
+                                            "do_start()\n",
+                                            "{\n",
+                                            "  cd $RAILS_ROOT && $COMMAND\n",
+                                            "}\n",
+                                            "case \"$1\" in\n",
+                                            "  start)\n",
+                                            "    do_start\n",
+                                            "  ;;\n",
+                                            "esac\n"
+                                        ]
+                                    ]
+                                },
+                                "owner": "root",
+                                "group": "root"
+                            }
+                        }
+                    }
+                }
+            },
+            "Properties": {
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "RegionMap",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "SecurityGroups": [
+                    {
+                        "Ref": "FrontendGroup"
+                    }
+                ],
+                "InstanceType": {
+                    "Ref": "InstanceType"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "CloudPatrol"
+                    },
+                    {
+                        "Key": "StackName",
+                        "Value": {
+                            "Ref": "AWS::StackName"
+                        }
+                    }
+                ],
+                "IamInstanceProfile": {
+                    "Ref": "InstanceRoleInstanceProfile"
+                },
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash -e\n",
+                                "# install aws cli + codedeploy agent\n",
+                                "yum -y update\n",
+                                "yum -y update aws-cfn-bootstrap\n",
+                                "yum -y install autoconf automake aws-cli curl-devel gcc gcc-c++ git libxml2 libxml2-devel libxslt libxslt-devel libyaml-devel make mlocate nodejs ruby ruby-devel sqlite-devel zlib-devel\n",
+                                "export zone=`curl http://169.254.169.254/latest/meta-data/placement/availability-zone`\n",
+                                "export region=${zone%?}\n",
+                                "aws s3 cp s3://aws-codedeploy-$region/latest/install . --region $region\n",
+                                "chmod +x ./install\n",
+                                "./install auto\n",
+                                "# install ruby + rails\n",
+                                "gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3\n",
+                                "yum -y groupinstall 'Development Tools'\n",
+                                "curl -L https://get.rvm.io | bash -s stable\n",
+                                "source /usr/local/rvm/scripts/rvm\n",
+                                "rvm requirements\n",
+                                "rvm install 1.9.3\n",
+                                "rvm use 1.9.3 --default\n",
+                                "rvm rubygems current\n",
+                                "gem install rails --no-ri --no-rdoc\n",
+                                "updatedb\n",
+                                "/opt/aws/bin/cfn-signal",
+                                " -e 0",
+                                " '",
+                                {
+                                    "Ref": "WaitHandle"
+                                },
+                                "'\n"
+                            ]
+                        ]
+                    }
+                }
+            }
+        },
+        "CodeDeployTrustRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Sid": "1",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "codedeploy.us-east-1.amazonaws.com",
+                                    "codedeploy.us-west-2.amazonaws.com"
+                                ]
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "Path": "/"
+            }
+        },
+        "CodeDeployRolePolicies": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": "CodeDeployPolicy",
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Resource": [
+                                "*"
+                            ],
+                            "Action": [
+                                "ec2:Describe*"
+                            ]
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Resource": [
+                                "*"
+                            ],
+                            "Action": [
+                                "autoscaling:CompleteLifecycleAction",
+                                "autoscaling:DeleteLifecycleHook",
+                                "autoscaling:DescribeLifecycleHooks",
+                                "autoscaling:DescribeAutoScalingGroups",
+                                "autoscaling:PutLifecycleHook",
+                                "autoscaling:RecordLifecycleActionHeartbeat"
+                            ]
+                        }
+                    ]
+                },
+                "Roles": [
+                    {
+                        "Ref": "CodeDeployTrustRole"
+                    }
+                ]
+            }
+        },
+        "InstanceRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "ec2.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path": "/"
+            }
+        },
+        "InstanceRolePolicies": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": "InstanceRole",
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "autoscaling:Describe*",
+                                "cloudformation:Describe*",
+                                "cloudformation:GetTemplate",
+                                "s3:Get*"
+                            ],
+                            "Resource": "*"
+                        }
+                    ]
+                },
+                "Roles": [
+                    {
+                        "Ref": "InstanceRole"
+                    }
+                ]
+            }
+        },
+        "InstanceRoleInstanceProfile": {
+            "Type": "AWS::IAM::InstanceProfile",
+            "Properties": {
+                "Path": "/",
+                "Roles": [
+                    {
+                        "Ref": "InstanceRole"
+                    }
+                ]
+            }
+        },
+        "FrontendGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Enable SSH",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "IPAddress": {
+            "Type": "AWS::EC2::EIP"
+        },
+        "IPAssociation": {
+            "Type": "AWS::EC2::EIPAssociation",
+            "Properties": {
+                "InstanceId": {
+                    "Ref": "Ec2Instance"
+                },
+                "EIP": {
+                    "Ref": "IPAddress"
+                }
+            }
+        },
+        "WaitHandle": {
+            "Type": "AWS::CloudFormation::WaitConditionHandle"
+        },
+        "WaitCondition": {
+            "Type": "AWS::CloudFormation::WaitCondition",
+            "DependsOn": "Ec2Instance",
+            "Properties": {
+                "Handle": {
+                    "Ref": "WaitHandle"
+                },
+                "Timeout": "1500"
+            }
+        }
+    },
+    "Outputs": {
+        "URL": {
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "http://",
+                        {
+                            "Ref": "IPAddress"
+                        },
+                        "/"
+                    ]
+                ]
+            }
+        },
+        "InstanceIPAddress": {
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        {
+                            "Ref": "IPAddress"
+                        }
+                    ]
+                ]
+            }
+        }
+    }
+}
