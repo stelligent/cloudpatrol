@@ -21,25 +21,10 @@
     "Mappings": {
         "RegionMap": {
             "us-east-1": {
-                "AMI": "ami-05355a6c"
-            },
-            "us-west-1": {
-                "AMI": "ami-951945d0"
+                "AMI": "ami-1ecae776"
             },
             "us-west-2": {
-                "AMI": "ami-16fd7026"
-            },
-            "eu-west-1": {
-                "AMI": "ami-24506250"
-            },
-            "sa-east-1": {
-                "AMI": "ami-3e3be423"
-            },
-            "ap-southeast-1": {
-                "AMI": "ami-74dda626"
-            },
-            "ap-northeast-1": {
-                "AMI": "ami-dcfa4edd"
+                "AMI": "ami-e7527ed7"
             }
         }
     },
@@ -77,32 +62,6 @@
             "Metadata": {
                 "AWS::CloudFormation::Init": {
                     "config": {
-                        "packages": {
-                            "yum": {
-                                "gcc-c++": [],
-                                "autoconf": [],
-                                "automake": [],
-                                "libxml2-devel": [],
-                                "libxslt-devel": [],
-                                "git": [],
-                                "sqlite-devel": [],
-                                "make": [],
-                                "aws-cli": [],
-                                "git": [],
-                                "gcc": [],
-                                "ruby-devel": [],
-                                "zlib-devel": [],
-                                "libxml2": [],
-                                "libxslt": [],
-                                "libxml2-devel": [],
-                                "libxslt-devel": [],
-                                "mlocate": [],
-                                "curl-devel": [],
-                                "sqlite-devel": [],
-                                "libyaml-devel": [],
-                                "nodejs": []
-                            }
-                        },
                         "services": {
                             "sysvinit": {
                                 "railsd": {
@@ -210,6 +169,7 @@
                                 "# install aws cli + codedeploy agent\n",
                                 "yum -y update\n",
                                 "yum -y update aws-cfn-bootstrap\n",
+                                "yum -y install autoconf automake aws-cli curl-devel gcc gcc-c++ git libxml2 libxml2-devel libxslt libxslt-devel libyaml-devel make mlocate nodejs ruby ruby-devel sqlite-devel zlib-devel\n",
                                 "export zone=`curl http://169.254.169.254/latest/meta-data/placement/availability-zone`\n",
                                 "export region=${zone%?}\n",
                                 "aws s3 cp s3://aws-codedeploy-$region/latest/install . --region $region\n",
@@ -226,8 +186,9 @@
                                 "rvm rubygems current\n",
                                 "gem install rails --no-ri --no-rdoc\n",
                                 "# install cloudpatrol\n",
-                                "git clone https://github.com/stelligent/cloudpatrol.git\n",
-                                "cd ~/cloudpatrol\n",
+                                "rm -rf /cloudpatrol\n",
+                                "git clone https://github.com/stelligent/cloudpatrol.git /cloudpatrol\n",
+                                "cd /cloudpatrol\n",
                                 "bundle install --without development test doc\n",
                                 "bundle exec rake db:setup\n",
                                 "rails server -p80 -d\n",
