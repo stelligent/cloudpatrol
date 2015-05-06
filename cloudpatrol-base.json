@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "AWS CloudFormation Template to run CloudPatrol",
+    "Description": "Creates an auto-scaling group for the CloudPatrol service to deploy to. (Note: it is just the base infrastructure, this template is designed to be deployed to via CodeDeploy.)",
     "Parameters": {
         "KeyName": {
             "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
@@ -57,74 +57,87 @@
                 }
             }
         },
-        "Ec2Instance": {
-            "Type": "AWS::EC2::Instance",
-            "Metadata": {
-                "AWS::CloudFormation::Init": {
-                    "config": {
-                        "services": {
-                            "sysvinit": {
-                                "railsd": {
-                                    "enabled": "true",
-                                    "ensureRunning": "true"
-                                }
-                            }
-                        },
-                        "files": {
-                            "/root/.gemrc": {
-                                "content": {
-                                    "Fn::Join": [
-                                        "",
-                                        [
-                                            "gem: --no-ri --no-rdoc"
-                                        ]
-                                    ]
-                                }
-                            },
-                            "/etc/gemrc": {
-                                "content": {
-                                    "Fn::Join": [
-                                        "",
-                                        [
-                                            "gem: --no-ri --no-rdoc"
-                                        ]
-                                    ]
-                                }
-                            },
-                            "/etc/init.d/railsd": {
-                                "mode": "000544",
-                                "content": {
-                                    "Fn::Join": [
-                                        "",
-                                        [
-                                            "#! /bin/sh\n",
-                                            "### BEGIN INIT INFO\n",
-                                            "# Default-Start:     2 3 4 5\n",
-                                            "# Default-Stop:      0 1 6\n",
-                                            "### END INIT INFO\n",
-                                            "PORT=80\n",
-                                            "RAILS_ROOT=\"/root/cloudpatrol\"\n",
-                                            "COMMAND=\"rails server -p$PORT -d\"\n",
-                                            "do_start()\n",
-                                            "{\n",
-                                            "  cd $RAILS_ROOT && $COMMAND\n",
-                                            "}\n",
-                                            "case \"$1\" in\n",
-                                            "  start)\n",
-                                            "    do_start\n",
-                                            "  ;;\n",
-                                            "esac\n"
-                                        ]
-                                    ]
-                                },
-                                "owner": "root",
-                                "group": "root"
-                            }
+        "CloudPatrolLoadBalancer": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {
+                "Listeners": [
+                    {
+                        "InstancePort": "80",
+                        "InstanceProtocol": "HTTP",
+                        "LoadBalancerPort": "80",
+                        "Protocol": "HTTP"
+                    }
+                ],
+                "AvailabilityZones": [
+                    "us-east-1b",
+                    "us-east-1c",
+                    "us-east-1d",
+                    "us-east-1e"
+                ],
+                "CrossZone": true,
+                "HealthCheck": {
+                    "HealthyThreshold": "5",
+                    "Interval": "15",
+                    "Target": "HTTP:80/",
+                    "Timeout": "5",
+                    "UnhealthyThreshold": "2"
+                },
+                "LoadBalancerName": {
+                    "Ref": "AWS::StackName"
+                },
+                "Scheme": "internet-facing",
+
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "CloudPatrol"
+                    },
+                    {
+                        "Key": "StackName",
+                        "Value": {
+                            "Ref": "AWS::StackName"
                         }
                     }
-                }
-            },
+                ]
+            }
+        },
+        "CloudPatrolAutoScalingGroup": {
+            "Type": "AWS::AutoScaling::AutoScalingGroup",
             "Properties": {
+                "AvailabilityZones": [
+                    "us-east-1b",
+                    "us-east-1c",
+                    "us-east-1d",
+                    "us-east-1e"
+                ],
+                "LaunchConfigurationName": {
+                    "Ref": "CloudPatrolLaunchConfig"
+                },
+                "MaxSize": "1",
+                "MinSize": "1",
+                "LoadBalancerNames" : [{"Ref" : "CloudPatrolLoadBalancer"}],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "CloudPatrol",
+                        "PropagateAtLaunch" : true
+                    },
+                    {
+                        "Key": "StackName",
+                        "Value": {
+                            "Ref": "AWS::StackName"
+                        },
+                        "PropagateAtLaunch" : true
+                    }
+                ]
+            }
+        },
+        "CloudPatrolLaunchConfig": {
+            "Type": "AWS::AutoScaling::LaunchConfiguration",
+            "Properties": {
+                "IamInstanceProfile": {
+                    "Ref": "InstanceRoleInstanceProfile"
+                },
                 "KeyName": {
                     "Ref": "KeyName"
                 },
@@ -144,21 +157,6 @@
                 ],
                 "InstanceType": {
                     "Ref": "InstanceType"
-                },
-                "Tags": [
-                    {
-                        "Key": "Name",
-                        "Value": "CloudPatrol"
-                    },
-                    {
-                        "Key": "StackName",
-                        "Value": {
-                            "Ref": "AWS::StackName"
-                        }
-                    }
-                ],
-                "IamInstanceProfile": {
-                    "Ref": "InstanceRoleInstanceProfile"
                 },
                 "UserData": {
                     "Fn::Base64": {
@@ -335,26 +333,12 @@
                 ]
             }
         },
-        "IPAddress": {
-            "Type": "AWS::EC2::EIP"
-        },
-        "IPAssociation": {
-            "Type": "AWS::EC2::EIPAssociation",
-            "Properties": {
-                "InstanceId": {
-                    "Ref": "Ec2Instance"
-                },
-                "EIP": {
-                    "Ref": "IPAddress"
-                }
-            }
-        },
         "WaitHandle": {
             "Type": "AWS::CloudFormation::WaitConditionHandle"
         },
         "WaitCondition": {
             "Type": "AWS::CloudFormation::WaitCondition",
-            "DependsOn": "Ec2Instance",
+            "DependsOn": "CloudPatrolAutoScalingGroup",
             "Properties": {
                 "Handle": {
                     "Ref": "WaitHandle"
@@ -371,21 +355,9 @@
                     [
                         "http://",
                         {
-                            "Ref": "IPAddress"
+                            "Fn::GetAtt" : [ "CloudPatrolLoadBalancer", "DNSName"] 
                         },
                         "/"
-                    ]
-                ]
-            }
-        },
-        "InstanceIPAddress": {
-            "Value": {
-                "Fn::Join": [
-                    "",
-                    [
-                        {
-                            "Ref": "IPAddress"
-                        }
                     ]
                 ]
             }
