@@ -20,7 +20,7 @@ gem "therubyracer"
 gem 'cloudpatrol', git: 'git://github.com/stelligent/cloudpatrol_gem.git', branch: 'master', ref: 'HEAD'
 #gem 'cloudpatrol', :path => '/Users/erickascic/github/cloudpatrol_gem'
 
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '3.1.2'
 gem 'sqlite3'
 
 group :doc do
