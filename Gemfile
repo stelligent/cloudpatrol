@@ -8,9 +8,9 @@ gem "cloudformation-ruby-dsl"
 gem 'whenever', require: false
 
 gem 'haml-rails'
-gem 'sass-rails', '~> 4.0.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'uglifier', '>= 1.3.0'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 
@@ -18,7 +18,7 @@ gem 'bootstrap-sass'
 gem 'cloudpatrol', git: 'https://github.com/stelligent/cloudpatrol_gem.git', branch: 'master', ref: 'HEAD'
 #gem 'cloudpatrol', :path => '/Users/erickascic/github/cloudpatrol_gem'
 
-gem 'bcrypt-ruby', '3.1.2'
+gem 'bcrypt-ruby'
 gem 'sqlite3'
 
 group :doc do
@@ -27,7 +27,7 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'watir', '~> 4.0.2'
+  gem 'watir'
 end
 
 group :test, :development do
