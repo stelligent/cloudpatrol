@@ -15,7 +15,7 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 
 #gem 'cloudpatrol', '0.1.3'
-gem 'cloudpatrol', git: 'git://github.com/stelligent/cloudpatrol_gem.git', branch: 'master', ref: 'HEAD'
+gem 'cloudpatrol', git: 'https://github.com/stelligent/cloudpatrol_gem.git', branch: 'master', ref: 'HEAD'
 #gem 'cloudpatrol', :path => '/Users/erickascic/github/cloudpatrol_gem'
 
 gem 'bcrypt-ruby', '3.1.2'
