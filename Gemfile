@@ -14,8 +14,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 
-gem "therubyracer"
-
 #gem 'cloudpatrol', '0.1.3'
 gem 'cloudpatrol', git: 'git://github.com/stelligent/cloudpatrol_gem.git', branch: 'master', ref: 'HEAD'
 #gem 'cloudpatrol', :path => '/Users/erickascic/github/cloudpatrol_gem'
