@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '1.9.3'
+ruby '2.3.6'
 
 gem 'simplecov', :require => false, :group => :test
 
