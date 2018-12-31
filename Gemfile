@@ -3,7 +3,7 @@ ruby '2.3.8'
 
 gem 'simplecov', :require => false, :group => :test
 
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.2.11'
 gem "cloudformation-ruby-dsl"
 gem 'whenever', require: false
 
